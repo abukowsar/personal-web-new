@@ -2,32 +2,34 @@
 
 import type React from "react";
 
-import { Geist, Geist_Mono } from "next/font/google";
 import { useState, useEffect } from "react";
 import { Analytics } from "@vercel/analytics/next";
 import "./globals.css";
-
-const _geist = Geist({ subsets: ["latin"] });
-const _geistMono = Geist_Mono({ subsets: ["latin"] });
 
 export default function RootLayout({
   children,
 }: Readonly<{
   children: React.ReactNode;
 }>) {
-  const [isDark, setIsDark] = useState(false);
+  const [isDark, setIsDark] = useState(() => {
+    if (typeof window !== "undefined") {
+      return (
+        localStorage.getItem("theme") === "dark" ||
+        (!localStorage.getItem("theme") &&
+          window.matchMedia("(prefers-color-scheme: dark)").matches)
+      );
+    }
+    return false;
+  });
 
   // <CHANGE> Added theme initialization on mount
   useEffect(() => {
-    const isDarkMode =
-      localStorage.getItem("theme") === "dark" ||
-      (!localStorage.getItem("theme") &&
-        window.matchMedia("(prefers-color-scheme: dark)").matches);
-    setIsDark(isDarkMode);
-    if (isDarkMode) {
+    if (isDark) {
       document.documentElement.classList.add("dark");
+    } else {
+      document.documentElement.classList.remove("dark");
     }
-  }, []);
+  }, [isDark]);
 
   // <CHANGE> Added theme toggle function
   const toggleTheme = () => {
