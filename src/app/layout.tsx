@@ -5,6 +5,14 @@ import type React from "react";
 import { useState, useEffect } from "react";
 import { Analytics } from "@vercel/analytics/next";
 import "./globals.css";
+import { Lexend, Poppins } from "next/font/google";
+import { cn } from "@/lib/utils";
+
+const poppins = Poppins({
+  subsets: ["latin"],
+  weight: ["400", "500", "600", "700"],
+  variable: "--font-poppins",
+});
 
 export default function RootLayout({
   children,
@@ -54,7 +62,12 @@ export default function RootLayout({
           `}
         </script>
       </head>
-      <body className={`font-sans antialiased transition-colors duration-300`}>
+      <body
+        className={cn(
+          `font-sans antialiased transition-colors duration-300`,
+          poppins.className
+        )}
+      >
         <div className="fixed top-4 right-20 md:right-4 z-50">
           <button
             onClick={toggleTheme}
