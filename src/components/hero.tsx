@@ -1,29 +1,31 @@
-"use client"
+"use client";
 
-import Link from "next/link"
-import { useEffect, useState } from "react"
-import { Download } from "lucide-react"
+import Link from "next/link";
+import { useEffect, useState } from "react";
+import { Download } from "lucide-react";
+import ownImage from "@/assets/images/about.png";
+import Image from "next/image";
 
 export default function Hero() {
-  const [mounted, setMounted] = useState(false)
-  const [isBookmarked, setIsBookmarked] = useState(false)
+  const [mounted, setMounted] = useState(false);
+  const [isBookmarked, setIsBookmarked] = useState(false);
 
   useEffect(() => {
-    setMounted(true)
-  }, [])
+    setMounted(true);
+  }, []);
 
   const handleDownloadResume = () => {
-    const link = document.createElement("a")
-    link.href = "/resume.pdf"
-    link.download = "resume.pdf"
-    document.body.appendChild(link)
-    link.click()
-    document.body.removeChild(link)
-  }
+    const link = document.createElement("a");
+    link.href = "/resume.pdf";
+    link.download = "resume.pdf";
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
+  };
 
   const handleBookmark = () => {
-    setIsBookmarked(!isBookmarked)
-  }
+    setIsBookmarked(!isBookmarked);
+  };
 
   return (
     <section
@@ -37,8 +39,9 @@ export default function Hero() {
               Hi, I'm a <span className="text-accent">Creative Developer</span>
             </h1>
             <p className="text-lg text-muted-foreground">
-              I craft beautiful, accessible digital experiences that blend thoughtful design with robust engineering.
-              Specializing in modern web technologies and pixel-perfect interfaces.
+              I craft beautiful, accessible digital experiences that blend
+              thoughtful design with robust engineering. Specializing in modern
+              web technologies and pixel-perfect interfaces.
             </p>
           </div>
 
@@ -76,9 +79,19 @@ export default function Hero() {
         <div className="hidden md:flex flex-col items-center justify-center relative h-96">
           {/* Main avatar circle */}
           <div className="absolute inset-0 flex items-center justify-center">
-            <div className="relative w-48 h-48 rounded-full bg-gradient-to-br from-accent/30 to-accent/10 flex items-center justify-center border-2 border-accent/20">
-              <div className={`text-8xl transition-transform duration-1000 ${mounted ? "scale-100" : "scale-75"}`}>
-                👨‍💻
+            <div className="relative w-60 h-60 rounded-full bg-gradient-to-br from-accent/30 to-accent/10 flex items-center justify-center border-2 border-accent/20">
+              <div
+                className={`text-8xl transition-transform duration-1000 ${
+                  mounted ? "scale-100" : "scale-75"
+                }`}
+              >
+                <Image
+                  src={ownImage}
+                  alt="Avatar"
+                  className="rounded-full object-cover"
+                  width={220}
+                  height={220}
+                />
               </div>
             </div>
           </div>
@@ -88,7 +101,9 @@ export default function Hero() {
             className={`absolute top-4 left-0 bg-card border border-border rounded-xl p-4 shadow-lg backdrop-blur-sm transition-all duration-1000 ${
               mounted ? "translate-y-0 opacity-100" : "translate-y-8 opacity-0"
             }`}
-            style={{ animation: mounted ? "float 6s ease-in-out infinite" : "none" }}
+            style={{
+              animation: mounted ? "float 6s ease-in-out infinite" : "none",
+            }}
           >
             <div className="flex items-center gap-2">
               <span className="text-2xl">⚛️</span>
@@ -104,7 +119,9 @@ export default function Hero() {
             className={`absolute bottom-8 right-0 bg-card border border-border rounded-xl p-4 shadow-lg backdrop-blur-sm transition-all duration-1000 ${
               mounted ? "translate-y-0 opacity-100" : "translate-y-8 opacity-0"
             }`}
-            style={{ animation: mounted ? "float 8s ease-in-out infinite 1s" : "none" }}
+            style={{
+              animation: mounted ? "float 8s ease-in-out infinite 1s" : "none",
+            }}
           >
             <div className="flex items-center gap-2">
               <span className="text-2xl">▲</span>
@@ -120,12 +137,18 @@ export default function Hero() {
             className={`absolute top-1/3 right-0 bg-card border border-border rounded-xl p-4 shadow-lg backdrop-blur-sm transition-all duration-1000 ${
               mounted ? "translate-y-0 opacity-100" : "translate-y-8 opacity-0"
             }`}
-            style={{ animation: mounted ? "float 7s ease-in-out infinite 0.5s" : "none" }}
+            style={{
+              animation: mounted
+                ? "float 7s ease-in-out infinite 0.5s"
+                : "none",
+            }}
           >
             <div className="flex items-center gap-2">
               <span className="text-2xl">🔷</span>
               <div>
-                <p className="font-semibold text-sm text-foreground">TypeScript</p>
+                <p className="font-semibold text-sm text-foreground">
+                  TypeScript
+                </p>
                 <p className="text-xs text-muted-foreground">Proficient</p>
               </div>
             </div>
@@ -136,12 +159,18 @@ export default function Hero() {
             className={`absolute bottom-12 left-0 bg-card border border-border rounded-xl p-4 shadow-lg backdrop-blur-sm transition-all duration-1000 ${
               mounted ? "translate-y-0 opacity-100" : "translate-y-8 opacity-0"
             }`}
-            style={{ animation: mounted ? "float 8s ease-in-out infinite 1.5s" : "none" }}
+            style={{
+              animation: mounted
+                ? "float 8s ease-in-out infinite 1.5s"
+                : "none",
+            }}
           >
             <div className="flex items-center gap-2">
               <span className="text-2xl">🎨</span>
               <div>
-                <p className="font-semibold text-sm text-foreground">Tailwind CSS</p>
+                <p className="font-semibold text-sm text-foreground">
+                  Tailwind CSS
+                </p>
                 <p className="text-xs text-muted-foreground">Master</p>
               </div>
             </div>
@@ -158,7 +187,7 @@ export default function Hero() {
           >
             <button
               onClick={handleDownloadResume}
-              className="flex items-center gap-2 px-4 py-2 bg-accent text-accent-foreground rounded-lg font-semibold hover:opacity-90 transition-opacity shadow-lg text-sm"
+              className="flex items-center gap-2 px-4 py-2 bg-accent text-accent-foreground rounded-lg font-semibold hover:opacity-90 transition-opacity shadow-lg text-sm cursor-pointer"
             >
               <Download size={16} />
               Download Resume
@@ -178,5 +207,5 @@ export default function Hero() {
         }
       `}</style>
     </section>
-  )
+  );
 }
