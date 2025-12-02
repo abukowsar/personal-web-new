@@ -2,7 +2,8 @@
 
 import Link from "next/link";
 import { useState } from "react";
-
+import logo from "@/assets/images/logo1.png";
+import Image from "next/image";
 export default function Header() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
 
@@ -11,6 +12,7 @@ export default function Header() {
     { label: "Services", href: "#services" },
     { label: "Projects", href: "#projects" },
     { label: "Blog", href: "#blog" },
+    { label: "Awards", href: "#awards" },
     { label: "Testimonials", href: "#testimonials" },
     { label: "About", href: "#about" },
     { label: "Contact", href: "#contact" },
@@ -20,7 +22,13 @@ export default function Header() {
     <header className="sticky top-0 z-40 bg-background/80 backdrop-blur border-b border-border transition-colors duration-300">
       <nav className="max-w-6xl mx-auto px-4 py-4 flex items-center justify-between">
         <Link href="/" className="text-2xl font-bold text-accent">
-          Abu Kawsar
+          <Image
+            width={200}
+            height={120}
+            className="object-cover"
+            alt="abu-kawsar"
+            src={logo}
+          />
         </Link>
 
         <button

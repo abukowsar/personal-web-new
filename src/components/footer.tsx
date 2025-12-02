@@ -13,7 +13,10 @@ import {
   Calendar,
   CheckCircle,
 } from "lucide-react";
+import Image from "next/image";
+import Link from "next/link";
 import { useState } from "react";
+import logo from "@/assets/images/logo1.png";
 
 export default function Footer() {
   const currentYear = new Date().getFullYear();
@@ -80,10 +83,15 @@ export default function Footer() {
             {/* Brand Section */}
             <div className="lg:col-span-1">
               <div className="mb-6">
-                {/* Logo */}
-                <h3 className="text-2xl font-bold text-primary mb-4">
-                  PORTFOLIO
-                </h3>
+                <Link href="/" className="text-2xl font-bold text-accent">
+                  <Image
+                    width={200}
+                    height={120}
+                    className="object-cover"
+                    alt="abu-kawsar"
+                    src={logo}
+                  />
+                </Link>
               </div>
               <p className="text-muted-foreground text-sm mb-6">
                 Available for consulting, freelance project management, and
