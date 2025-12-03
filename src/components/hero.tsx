@@ -36,7 +36,7 @@ export default function Hero() {
         <div className=" order-2 md:order-1 space-y-6">
           <div className="space-y-4">
             <h1 className="text-5xl md:text-6xl font-bold text-foreground leading-tight">
-              Hi, I'm a <span className="text-accent">Creative Developer</span>
+              I'm a <span className="text-accent">Technical Project Manager</span>
             </h1>
             <p className="text-lg text-muted-foreground">
               I craft beautiful, accessible digital experiences that blend
