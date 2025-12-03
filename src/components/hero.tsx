@@ -39,9 +39,7 @@ export default function Hero() {
               I'm a <span className="text-accent">Technical Project Manager</span>
             </h1>
             <p className="text-lg text-muted-foreground">
-              I craft beautiful, accessible digital experiences that blend
-              thoughtful design with robust engineering. Specializing in modern
-              web technologies and pixel-perfect interfaces.
+              I am delivering high-impact projects across software, hardware, and manufacturing. Expert in Agile, cross-functional team leadership, cost control, and stakeholder alignment. Proven track record: 30% reduction in project delays and 20% increase in customer satisfaction.
             </p>
           </div>
 
@@ -50,13 +48,13 @@ export default function Hero() {
               href="#contact"
               className="px-6 py-3 bg-accent text-accent-foreground rounded-lg font-semibold hover:opacity-90 transition-opacity"
             >
-              Get in Touch
+             Book a consultation
             </Link>
             <Link
               href="#projects"
               className="px-6 py-3 border-2 border-accent text-accent rounded-lg font-semibold hover:bg-accent hover:text-accent-foreground transition-colors"
             >
-              View My Work
+              View Projects
             </Link>
           </div>
 
