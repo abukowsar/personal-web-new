@@ -62,11 +62,11 @@ export default function Hero() {
 
           <div className="flex gap-8 pt-8">
             <div className="space-y-1">
-              <p className="text-3xl font-bold text-accent">50+</p>
+              <p className="text-3xl font-bold text-accent">100+</p>
               <p className="text-muted-foreground">Projects Completed</p>
             </div>
             <div className="space-y-1">
-              <p className="text-3xl font-bold text-accent">5+</p>
+              <p className="text-3xl font-bold text-accent">12+</p>
               <p className="text-muted-foreground">Years Experience</p>
             </div>
             <div className="space-y-1">
@@ -108,7 +108,7 @@ export default function Hero() {
             <div className="flex items-center gap-2">
               <span className="text-2xl">⚛️</span>
               <div>
-                <p className="font-semibold text-sm text-foreground">React</p>
+                <p className="font-semibold text-sm text-foreground">Project</p>
                 <p className="text-xs text-muted-foreground">Expert</p>
               </div>
             </div>
