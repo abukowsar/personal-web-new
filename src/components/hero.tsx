@@ -3,7 +3,7 @@
 import Link from "next/link";
 import { useEffect, useState } from "react";
 import { Download } from "lucide-react";
-import ownImage from "@/assets/images/about.png";
+import ownImage from "@/assets/images/about_circle.png";
 import Image from "next/image";
 
 export default function Hero() {
