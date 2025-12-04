@@ -46,7 +46,7 @@ export default function Blog() {
       icon: "📱",
       color: "bg-purple-500",
     },
-    {
+   {/* {
       id: 3,
       title: "'Smart Haat' for safe purchase and sale of sacrificial animals",
       excerpt:
@@ -93,7 +93,7 @@ export default function Blog() {
       image: blog3,
       icon: "🤖",
       color: "bg-cyan-500",
-    },
+    },*/}
   ];
 
   const handleImageClick = (imageSrc: string, imageAlt: string) => {
