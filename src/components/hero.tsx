@@ -35,9 +35,9 @@ export default function Hero() {
       <div className="max-w-6xl w-full grid md:grid-cols-2 gap-14 md:gap-12 items-center">
         <div className=" order-2 md:order-1 space-y-6">
           <div className="space-y-4">
-            <h4 className="text-5xl md:text-6xl font-bold text-foreground leading-tight">
-              I will help the teams deliver complex technical products — on time & under budget. <span className="text-accent"></span>
-            </h4>
+            <h1 className="text-5xl md:text-6xl font-bold text-foreground leading-tight">
+              I'm a <span className="text-accent">Technical Project Manager</span>
+            </h1>
             <p className="text-lg text-muted-foreground">
               I am delivering high-impact projects across software, hardware, and manufacturing. Expert in Agile, cross-functional team leadership, cost control, and stakeholder alignment. Proven track record: 30% reduction in project delays and 20% increase in customer satisfaction.
             </p>

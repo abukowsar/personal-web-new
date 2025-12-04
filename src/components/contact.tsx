@@ -42,7 +42,7 @@ export default function Contact() {
     {
       icon: "🏠",
       label: "Address",
-      value: "Dept. of ICT, ICT Division, Agargaon, Dhaka-1217, Bangladesh",
+      value: "Dept. of ICT, ICT Division, E-14/X, ICT Tower, Agargaon, Dhaka-1207, Bangladesh",
       link: "https://maps.google.com/?q=ICT+Division+Agargaon+Dhaka",
     },
     {
