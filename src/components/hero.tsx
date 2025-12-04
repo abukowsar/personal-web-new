@@ -3,7 +3,7 @@
 import Link from "next/link";
 import { useEffect, useState } from "react";
 import { Download } from "lucide-react";
-import ownImage from "@/assets/images/about_circle.png";
+import ownImage from "@/assets/images/about.png";
 import Image from "next/image";
 
 export default function Hero() {
@@ -107,7 +107,7 @@ export default function Hero() {
               <span className="text-2xl">⚛️</span>
               <div>
                 <p className="font-semibold text-sm text-foreground">Project</p>
-                <p className="text-xs text-muted-foreground">Expert</p>
+                <p className="text-xs text-muted-foreground">Management</p>
               </div>
             </div>
           </div>
@@ -124,8 +124,8 @@ export default function Hero() {
             <div className="flex items-center gap-2">
               <span className="text-2xl">▲</span>
               <div>
-                <p className="font-semibold text-sm text-foreground">Next.js</p>
-                <p className="text-xs text-muted-foreground">Advanced</p>
+                <p className="font-semibold text-sm text-foreground">AI</p>
+                <p className="text-xs text-muted-foreground">Integration</p>
               </div>
             </div>
           </div>
@@ -145,7 +145,7 @@ export default function Hero() {
               <span className="text-2xl">🔷</span>
               <div>
                 <p className="font-semibold text-sm text-foreground">
-                  TypeScript
+                  
                 </p>
                 <p className="text-xs text-muted-foreground">Proficient</p>
               </div>
@@ -183,12 +183,14 @@ export default function Hero() {
               mounted ? "translate-y-0 opacity-100" : "translate-y-8 opacity-0"
             }`}
           >
+
+            Engr Abu Kowsar
             <button
               onClick={handleDownloadResume}
               className="flex items-center gap-2 px-4 py-2 bg-accent text-accent-foreground rounded-lg font-semibold hover:opacity-90 transition-opacity shadow-lg text-sm cursor-pointer w-[200px] md:w-auto"
             >
               <Download size={16} />
-              Download Resume
+              Download Resume (PDF)
             </button>
           </div>
         </div>
