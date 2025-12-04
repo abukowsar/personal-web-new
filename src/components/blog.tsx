@@ -23,11 +23,11 @@ export default function Blog() {
     {
       id: 1,
       title:
-        "IEEE websites place cookies on your device to give you the best user experience",
+        "Khoj is an AI-based fact-checking website. ",
       excerpt:
-        "Understanding how IEEE enhances user experience through modern web technologies and cookie management systems for personalized content delivery.",
+        "When you ask Khoj to verify something, it first collects information from the internet, social media, news archives, and multimedia sources. ",
       category: "Technology",
-      date: "10 Jan, 2025",
+      date: "30 Nov, 2025",
       readTime: "5 min read",
       image: blog1,
       icon: "🌐",

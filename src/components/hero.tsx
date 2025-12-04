@@ -122,7 +122,7 @@ export default function Hero() {
             }}
           >
             <div className="flex items-center gap-2">
-              <span className="text-2xl">▲</span>
+              <span className="text-2xl"></span>
               <div>
                 <p className="font-semibold text-sm text-foreground">AI</p>
                 <p className="text-xs text-muted-foreground">Integration</p>
@@ -142,7 +142,7 @@ export default function Hero() {
             }}
           >
             <div className="flex items-center gap-2">
-              <span className="text-2xl">🔷</span>
+              <span className="text-2xl"></span>
               <div>
                 <p className="font-semibold text-sm text-foreground">
                   Agile 

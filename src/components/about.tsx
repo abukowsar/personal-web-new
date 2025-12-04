@@ -19,7 +19,7 @@ export default function About() {
     {
       title: "Programmer",
       company:
-        "Dept. of ICT, ICT Division, Ministry of Posts Telecommunications and IT",
+        "Dept. of ICT, ICT Division, Ministry of Posts Telecommunications and ICT",
       period: "2019 - Present",
       duration: "6 years",
       description:
@@ -28,8 +28,8 @@ export default function About() {
     {
       title: "Project Manager",
       company: "Bright Tech Company, Ltd.",
-      period: "2015 - Present",
-      duration: "10 years",
+      period: "2015 - 2019",
+      duration: "4 years",
       description:
         "Design, development, and maintenance of software solutions and databases that streamline organizational processes and improve service delivery for large-scale rollouts.",
     },
@@ -52,8 +52,8 @@ export default function About() {
     {
       title: "Executive IT and Operation",
       company: "Bangkok Hospital Dhaka Office",
-      period: "2010 - 2012",
-      duration: "2 years",
+      period: "2011 - 2012",
+      duration: "1 year",
       description:
         "Managed multiple ERP application - Hospital Planning and Control System (HPCS) projects for manufacturing facilities throughout the Asia Pacific region.",
     },
@@ -62,7 +62,7 @@ export default function About() {
   const education = [
     {
       degree: "PgD in Information and Communication Technology",
-      institution: "Bangladesh Computer Council",
+      institution: "Bangladesh Computer Council (BCC)",
       period: "2014 - 2015",
       duration: "1 year",
     },
@@ -224,16 +224,16 @@ export default function About() {
                 {/* Quick Stats */}
                 <div className="grid grid-cols-3 gap-3">
                   <div className="text-center p-3 rounded-lg bg-background/50">
-                    <p className="text-2xl font-bold text-primary">50+</p>
-                    <p className="text-xs text-muted-foreground">Projects</p>
+                    <p className="text-2xl font-bold text-primary">10+</p>
+                    <p className="text-xs text-muted-foreground">Innovations</p>
                   </div>
                   <div className="text-center p-3 rounded-lg bg-background/50">
-                    <p className="text-2xl font-bold text-green-500">15+</p>
-                    <p className="text-xs text-muted-foreground">Teams</p>
+                    <p className="text-2xl font-bold text-green-500">30%</p>
+                    <p className="text-xs text-muted-foreground">Reduced delays</p>
                   </div>
                   <div className="text-center p-3 rounded-lg bg-background/50">
-                    <p className="text-2xl font-bold text-violet-500">7+</p>
-                    <p className="text-xs text-muted-foreground">Certs</p>
+                    <p className="text-2xl font-bold text-violet-500">20%</p>
+                    <p className="text-xs text-muted-foreground">Customer satisfaction ↑</p>
                   </div>
                 </div>
               </div>
