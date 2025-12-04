@@ -150,7 +150,7 @@ Agargaon, Dhaka–1217, Bangladesh
                 Response Time
               </h4>
               <p className="text-muted-foreground mb-3">
-                I will respond to your queries within 48 hours.
+                I will respond to your queries within 24 hours.
               </p>
               <p className="text-sm text-muted-foreground">
                 For urgent matters, please call directly.
@@ -170,7 +170,7 @@ Agargaon, Dhaka–1217, Bangladesh
                 Enter your Query details
               </h3>
               <p className="text-muted-foreground text-sm mb-6">
-                Tell me about your challenge — I will respond within 48 hours.
+                Tell me about your challenge — I will respond within 24 hours.
               </p>
             </div>
 
