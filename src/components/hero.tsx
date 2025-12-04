@@ -104,7 +104,7 @@ export default function Hero() {
             }}
           >
             <div className="flex items-center gap-2">
-              <span className="text-2xl">⚛️</span>
+              <span className="text-2xl"></span>
               <div>
                 <p className="font-semibold text-sm text-foreground">Project</p>
                 <p className="text-xs text-muted-foreground">Management</p>
@@ -145,9 +145,9 @@ export default function Hero() {
               <span className="text-2xl">🔷</span>
               <div>
                 <p className="font-semibold text-sm text-foreground">
-                  
+                  Agile 
                 </p>
-                <p className="text-xs text-muted-foreground">Proficient</p>
+                <p className="text-xs text-muted-foreground">Specialist</p>
               </div>
             </div>
           </div>
@@ -164,12 +164,12 @@ export default function Hero() {
             }}
           >
             <div className="flex items-center gap-2">
-              <span className="text-2xl">🎨</span>
+              <span className="text-2xl"></span>
               <div>
                 <p className="font-semibold text-sm text-foreground">
-                  Tailwind CSS
+                  Industrial
                 </p>
-                <p className="text-xs text-muted-foreground">Master</p>
+                <p className="text-xs text-muted-foreground">Designer</p>
               </div>
             </div>
           </div>
