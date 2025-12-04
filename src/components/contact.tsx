@@ -98,7 +98,7 @@ export default function Contact() {
           <div className="space-y-6 order-2 md:order-1">
             <div className="p-6 border border-border rounded-xl bg-card">
               <h3 className="text-xl font-bold text-foreground mb-4">
-                Technical Coordination
+                Technical Contact
               </h3>
 
               <div className="space-y-4">
@@ -109,7 +109,7 @@ export default function Contact() {
                       Project Management & Technical Coordination Office:
                     </h6>
                     <p className="text-muted-foreground text-sm">
-                      Department of Information & Communication Technology (DoICT)
+                      Dept. of Information & Communication Technology (DoICT)
                       <br />
 ICT Division, Ministry of Posts, Telecommunications & ICT
 <br />
