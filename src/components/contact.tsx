@@ -98,32 +98,35 @@ export default function Contact() {
           <div className="space-y-6 order-2 md:order-1">
             <div className="p-6 border border-border rounded-xl bg-card">
               <h3 className="text-xl font-bold text-foreground mb-4">
-                Contact Information
+                Technical Coordination
               </h3>
 
               <div className="space-y-4">
                 <div className="flex items-start gap-3">
-                  <span className="text-2xl">🏠</span>
+                  <span className="text-2xl">📌</span>
                   <div>
                     <h6 className="font-semibold text-foreground mb-1">
-                      Address:
+                      Project Management & Technical Coordination Office:
                     </h6>
                     <p className="text-muted-foreground text-sm">
-                      Dept. of ICT, ICT Division, Agargaon
+                      Department of Information & Communication Technology (DoICT)
                       <br />
-                      Dhaka-1217, Bangladesh
+ICT Division, Ministry of Posts, Telecommunications & ICT
+<br />
+Agargaon, Dhaka–1217, Bangladesh
+                      
                     </p>
                   </div>
                 </div>
 
                 <div className="flex items-start gap-3">
-                  <span className="text-2xl">📱</span>
+                  <span className="text-2xl">📞</span>
                   <div>
                     <h6 className="font-semibold text-foreground mb-1">
-                      Phone:
+                      Technical Support & Project Coordination:
                     </h6>
                     <p className="text-muted-foreground text-sm">
-                      (+88) 02337730161
+                      (+88) 01710 27 87 60
                     </p>
                   </div>
                 </div>
@@ -132,7 +135,7 @@ export default function Contact() {
                   <span className="text-2xl">📧</span>
                   <div>
                     <h6 className="font-semibold text-foreground mb-1">
-                      Email:
+                      Official Project Communication:
                     </h6>
                     <p className="text-muted-foreground text-sm">
                       abu.kowsar@doict.gov.bd
