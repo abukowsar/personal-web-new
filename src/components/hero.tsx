@@ -184,7 +184,7 @@ export default function Hero() {
             }`}
           >
 
-            Engr Abu Kowsar
+            
             <button
               onClick={handleDownloadResume}
               className="flex items-center gap-2 px-4 py-2 bg-accent text-accent-foreground rounded-lg font-semibold hover:opacity-90 transition-opacity shadow-lg text-sm cursor-pointer w-[200px] md:w-auto"
