@@ -1,6 +1,6 @@
 "use client";
 import img1 from "@/assets/images/projects/img-1.jpg";
-import img2 from "@/assets/images/projects/img-2.png";
+import img2 from "@/assets/images/projects/img-13.png";
 import img3 from "@/assets/images/projects/img-3.png";
 import img4 from "@/assets/images/projects/img-4.png";
 import Image from "next/image";
@@ -19,14 +19,14 @@ export default function Projects() {
   });
   const projects = [
     {
-      title: "E-Commerce Platform",
-      description: "Full-stack e-commerce solution with payment integration",
+      title: "AI Based Factchecking Platform (Khoj-BD)",
+      description: "Modern AI solutions for Bengali LLM.",
       tags: ["React", "Node.js", "MongoDB"],
       image: img1,
     },
     {
-      title: "SaaS Dashboard",
-      description: "Analytics dashboard for tracking business metrics",
+      title: "AI Based Platform (Bangla AI)",
+      description: "Modern AI solutions for Bengali LLM.",
       tags: ["Next.js", "TypeScript", "TailwindCSS"],
       image: img2,
     },
