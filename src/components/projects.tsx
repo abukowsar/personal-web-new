@@ -1,8 +1,8 @@
 "use client";
 import img1 from "@/assets/images/projects/img-1.jpg";
 import img2 from "@/assets/images/projects/img-13.png";
-import img3 from "@/assets/images/projects/img-3.png";
-import img4 from "@/assets/images/projects/img-4.png";
+import img3 from "@/assets/images/projects/img-14.png";
+import img4 from "@/assets/images/projects/img-15.png";
 import Image from "next/image";
 import ImageLightbox from "./image-lightbox";
 import { useState } from "react";
@@ -20,25 +20,25 @@ export default function Projects() {
   const projects = [
     {
       title: "AI Based Factchecking Platform (Khoj-BD)",
-      description: "Modern AI solutions for Bengali LLM.",
+      description: "Artificial Intelligence Powered First Bangla Fact Checking Platform",
       tags: ["React", "Node.js", "MongoDB"],
       image: img1,
     },
     {
-      title: "AI Based Platform (Bangla AI)",
-      description: "Modern AI solutions for Bengali LLM.",
+      title: "LLM Platform (Bangla AI)",
+      description: "Modern AI solutions for all your Bengali language needs - anytime, anywhere",
       tags: ["Next.js", "TypeScript", "TailwindCSS"],
       image: img2,
     },
     {
-      title: "Mobile App",
-      description: "Cross-platform mobile application for productivity",
+      title: "Complaint Management System",
+      description: "A Digital Solution centralizes and automates the process of handling complaints",
       tags: ["React Native", "Firebase", "Redux"],
       image: img3,
     },
     {
-      title: "Design System",
-      description: "Comprehensive component library and design tokens",
+      title: "ERP System",
+      description: "Enterprise Resource Planning, system is a type of business management",
       tags: ["React", "Storybook", "CSS-in-JS"],
       image: img4,
     },
