@@ -49,6 +49,7 @@ export default function Awards() {
         "Best Academic Award — Islamic University Bangladesh, 2008",
         "Best Debater Award — IUDC, 2009",
         "Crest of Honor — FTFL Program (World Bank), 2014",
+        "Best Innovation Award — Arranged by the ICT Division, 2025",
       ],
     },
     {
