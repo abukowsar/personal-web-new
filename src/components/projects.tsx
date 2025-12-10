@@ -113,6 +113,27 @@ export default function Projects() {
           </div>
         </div>
       </section>
+      {/* View All Button */}
+          <div className="text-center mt-12">
+            <button className="inline-flex items-center gap-2 px-8 py-4 bg-primary text-primary-foreground rounded-xl font-semibold hover:bg-primary/90 transition-all duration-300 hover:shadow-xl hover:shadow-primary/25 hover:scale-105">
+              View All Articles
+              <svg
+                className="w-5 h-5"
+                fill="none"
+                stroke="currentColor"
+                viewBox="0 0 24 24"
+              >
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  strokeWidth={2}
+                  d="M17 8l4 4m0 0l-4 4m4-4H3"
+                />
+              </svg>
+            </button>
+          </div>
+        </div>
+      </section>
       <ImageLightbox
         isOpen={lightboxState.isOpen}
         imageSrc={lightboxState.imageSrc}
