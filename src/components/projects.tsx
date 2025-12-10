@@ -68,7 +68,7 @@ export default function Projects() {
               Featured Projects
             </h2>
             <p className="text-lg text-muted-foreground">
-              A selection of my recent work
+              A selection of my recent work, Whhic is highlights impact, technology, and governance relevance.
             </p>
           </div>
 
@@ -116,7 +116,7 @@ export default function Projects() {
       {/* View All Button */}
           <div className="text-center mt-12">
             <button className="inline-flex items-center gap-2 px-8 py-4 bg-primary text-primary-foreground rounded-xl font-semibold hover:bg-primary/90 transition-all duration-300 hover:shadow-xl hover:shadow-primary/25 hover:scale-105">
-              View All Articles
+              View More Projects
               <svg
                 className="w-5 h-5"
                 fill="none"
