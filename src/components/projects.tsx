@@ -132,8 +132,8 @@ export default function Projects() {
               </svg>
             </button>
           </div>
-        </div>
-      </section>
+
+      
       <ImageLightbox
         isOpen={lightboxState.isOpen}
         imageSrc={lightboxState.imageSrc}
