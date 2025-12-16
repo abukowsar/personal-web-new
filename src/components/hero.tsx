@@ -68,7 +68,7 @@ export default function Hero() {
               <p className="text-muted-foreground">Years Experience</p>
             </div>
             <div className="space-y-1">
-              <p className="text-3xl font-bold text-accent">100%</p>
+              <p className="text-3xl font-bold text-accent">90%</p>
               <p className="text-muted-foreground">Client Satisfaction</p>
             </div>
           </div>

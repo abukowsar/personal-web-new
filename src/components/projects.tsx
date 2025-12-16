@@ -113,7 +113,7 @@ export default function Projects() {
           </div>
         </div>
       </section>
-      {/* View All Button */}
+      {/* View All Button */} 
           <div className="text-center mt-12">
             <button className="inline-flex items-center gap-2 px-8 py-4 bg-primary text-primary-foreground rounded-xl font-semibold hover:bg-primary/90 transition-all duration-300 hover:shadow-xl hover:shadow-primary/25 hover:scale-105">
               View More Projects
