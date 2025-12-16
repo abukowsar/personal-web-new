@@ -133,7 +133,7 @@ export default function Projects() {
             </button>
           </div>
 
-      
+
       <ImageLightbox
         isOpen={lightboxState.isOpen}
         imageSrc={lightboxState.imageSrc}
