@@ -184,16 +184,7 @@ export default function Hero() {
             }`}
           >
               {/* Name with link */}
-<div className="flex items-center gap-2">
-              <h3 className="text-xl font-semibold">Engr. Abu Kowsar</h3>
-              <p className="text-sm text-gray-500">Technical Project Manager — Lakshmipur, Bangladesh</p>
-          </div>
-              <div className="mt-4 w-full">
-                  <div className="flex justify-between text-sm text-gray-600">
-                      <div>Availability</div>
-                      <div>Part-time / Consulting</div>
-                  </div>
-              </div>
+
 
 
 
