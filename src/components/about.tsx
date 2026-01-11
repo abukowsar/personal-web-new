@@ -224,15 +224,15 @@ export default function About() {
                 {/* Quick Stats */}
                 <div className="grid grid-cols-3 gap-3">
                   <div className="text-center p-3 rounded-lg bg-background/50">
-                    <p className="text-2xl font-bold text-primary">10+</p>
+                    <p className="text-2xl font-bold text-primary">100+</p>
                     <p className="text-xs text-muted-foreground">Innovations</p>
                   </div>
                   <div className="text-center p-3 rounded-lg bg-background/50">
-                    <p className="text-2xl font-bold text-green-500">30%</p>
-                    <p className="text-xs text-muted-foreground">Reduced delays</p>
+                    <p className="text-2xl font-bold text-green-500">1000+</p>
+                    <p className="text-xs text-muted-foreground">Successfull Projects</p>
                   </div>
                   <div className="text-center p-3 rounded-lg bg-background/50">
-                    <p className="text-2xl font-bold text-violet-500">20%</p>
+                    <p className="text-2xl font-bold text-violet-500">90%</p>
                     <p className="text-xs text-muted-foreground">Customer satisfaction ↑</p>
                   </div>
                 </div>

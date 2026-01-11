@@ -220,13 +220,30 @@ Agargaon, Dhaka–1217, Bangladesh
               placeholder="Your message..."
             ></textarea>
 
-            <button
-              type="submit"
-              className="w-full px-6 py-3 bg-accent text-accent-foreground rounded-lg font-semibold hover:opacity-90 active:scale-95 transition-all duration-200"
-              disabled={loading}
-            >
-              Send Message
-            </button>
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+              <button
+                type="submit"
+                className="w-full px-6 py-3 bg-accent text-accent-foreground rounded-lg font-semibold hover:opacity-90 active:scale-95 transition-all duration-200"
+                disabled={loading}
+              >
+                Send Message
+              </button>
+
+              <button
+                type="button"
+                onClick={() => {
+                  // Pre-fill form for hiring inquiry
+                  setFormData({
+                    ...formData,
+                    subject: "Hiring Inquiry - Project Management Services",
+                    message: "Hi Abu, I'm interested in hiring you for project management services. Please let me know your availability and rates."
+                  });
+                }}
+                className="w-full px-6 py-3 bg-gradient-to-r from-teal-500 to-cyan-500 text-white rounded-lg font-semibold hover:from-teal-600 hover:to-cyan-600 transition-all duration-300 shadow-lg hover:shadow-xl border-2 border-teal-400/50"
+              >
+                Hire Me
+              </button>
+            </div>
 
             <p className="text-xs text-muted-foreground text-center">
               This will open your email app to send the message

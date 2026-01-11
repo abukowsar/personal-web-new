@@ -4,6 +4,8 @@ import Image from "next/image";
 import Link from "next/link";
 import { ArrowLeft, ExternalLink, Github } from "lucide-react";
 import ImageLightbox from "@/components/image-lightbox";
+import Header from "@/components/header";
+import Footer from "@/components/footer";
 
 // Import project images
 import img1 from "@/assets/images/projects/img-1.jpg";
@@ -150,21 +152,17 @@ export default function Portfolio() {
 
   return (
     <>
+        <Header />
       <div className="min-h-screen bg-background">
         {/* Header */}
         <div className="bg-muted/30 py-20">
           <div className="max-w-6xl mx-auto px-4">
-            <Link 
-              href="/" 
-              className="inline-flex items-center gap-2 text-muted-foreground hover:text-foreground transition-colors mb-8"
-            >
-              <ArrowLeft className="w-4 h-4" />
-              Back to Home
-            </Link>
+
+
             
             <div className="text-center">
               <h1 className="text-4xl md:text-6xl font-bold text-foreground mb-6">
-                My Portfolio
+                Projects
               </h1>
               <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
                 Explore my complete collection of projects, from AI-powered solutions to enterprise applications. 
@@ -301,6 +299,7 @@ export default function Portfolio() {
         imageAlt={lightboxState.imageAlt}
         onClose={handleCloseLightbox}
       />
+       <Footer />
     </>
   );
 }

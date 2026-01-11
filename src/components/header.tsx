@@ -7,15 +7,16 @@ import Image from "next/image";
 export default function Header() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
 
-  const navItems = [
-    { label: "Home", href: "#home" },
-    { label: "Services", href: "#services" },
-    { label: "Projects", href: "#projects" },
-    { label: "Blog", href: "#blog" },
-    { label: "Awards", href: "#awards" },
-    { label: "Testimonials", href: "#testimonials" },
-    { label: "About", href: "#about" },
-    { label: "Contact", href: "#contact" },
+   const navItems = [
+    { label: "Home", href: "/#home" },
+    { label: "Services", href: "/#services" },
+    { label: "Projects", href: "/#projects" },
+    { label: "Blog", href: "/#blog" },
+    { label: "Books", href: "/#books" },
+    { label: "Awards", href: "/#awards" },
+    { label: "Testimonials", href: "/#testimonials" },
+    { label: "About", href: "/#about" },
+    { label: "Contact", href: "/#contact" },
   ];
 
   return (
