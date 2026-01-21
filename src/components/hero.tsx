@@ -247,7 +247,9 @@ export default function Hero() {
               mounted ? "translate-y-0 opacity-100" : "translate-y-8 opacity-0"
             }`}
           >
-{/* Availability Badge */}
+
+
+            {/* Availability Badge */}
              <div className="text-center mb-6">
                <div className="flex items-center justify-center gap-3 mb-4 flex-wrap">
                 <h3 className="text-xl font-bold text-gray-900 dark:text-white">

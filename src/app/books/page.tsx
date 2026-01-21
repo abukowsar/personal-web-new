@@ -7,7 +7,7 @@ import Header from "@/components/header";
 import Footer from "@/components/footer";
 
 // Import book cover images
-import book1 from "@/assets/images/projects/img-1.jpg";
+import book1 from "@/assets/images/blog/book/book1.jpg";
 import book2 from "@/assets/images/projects/img-2.png";
 import book3 from "@/assets/images/projects/img-3.png";
 import book4 from "@/assets/images/projects/img-4.png";
@@ -18,7 +18,7 @@ export default function Books() {
   const allBooks = [
     {
       id: 1,
-      title: "Project Management Excellence",
+      title: "Child Cyber Safety",
       subtitle: "A Comprehensive Guide to Modern PM Practices",
       author: "Abu Kowsar",
       description: "Master the art of project management with proven methodologies, real-world case studies, and practical frameworks for success. This comprehensive guide covers traditional and agile approaches, risk management, stakeholder engagement, and leadership strategies.",

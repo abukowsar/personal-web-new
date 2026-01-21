@@ -4,7 +4,7 @@ import Image from "next/image";
 import { Star, BookOpen, Download, ExternalLink } from "lucide-react";
 
 // Import book cover images (using project images as placeholders)
-import book1 from "@/assets/images/projects/img-1.jpg";
+import book1 from "@/assets/images/blog/book/book1.jpg";
 import book2 from "@/assets/images/projects/img-2.png";
 import book3 from "@/assets/images/projects/img-3.png";
 import book4 from "@/assets/images/projects/img-4.png";
@@ -23,7 +23,7 @@ export default function Books() {
       pages: 320,
       language: "English",
       publishYear: "2024",
-      price: "$29.99",
+      price: "$0.99",
       image: book1,
       color: "bg-blue-500",
       icon: "📊",
