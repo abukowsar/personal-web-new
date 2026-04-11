@@ -109,9 +109,9 @@ export default function Contact() {
                       Project Management & Technical Coordination Office:
                     </h6>
                     <p className="text-muted-foreground text-sm">
-                      Dept. of Information & Communication Technology (DoICT)
+                      Dept. of Information & Communication Technology
                       <br />
-ICT Division, Ministry of Posts, Telecommunications & ICT
+ICT Division, Ministry of Posts, Telecommunications & IT
 <br />
 Agargaon, Dhaka–1217, Bangladesh
                       
