@@ -264,6 +264,7 @@ export default function Hero() {
               <p className="text-lg font-semibold text-teal-600 dark:text-teal-400 mb-4">
                 Technical Project Manager
               </p>*/}
+                 </div>
               <div className="inline-flex items-center gap-2 px-4 py-2 bg-green-50 dark:bg-green-900/20 border border-green-200 dark:border-green-800 rounded-full mb-6">
                 <div className="w-2 h-2 bg-green-500 rounded-full animate-pulse"></div>
                 <span className="text-sm font-medium text-green-700 dark:text-green-300">Available</span>
