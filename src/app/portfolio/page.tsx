@@ -9,13 +9,13 @@ import Footer from "@/components/footer";
 
 // Import project images
 import img1 from "@/assets/images/projects/img-1.jpg";
-import img2 from "@/assets/images/projects/img-13.png";
-import img3 from "@/assets/images/projects/img-14.png";
-import img4 from "@/assets/images/projects/img-15.png";
-import img5 from "@/assets/images/projects/img-2.png";
-import img6 from "@/assets/images/projects/img-3.png";
-import img7 from "@/assets/images/projects/img-4.png";
-import img8 from "@/assets/images/projects/img-5.png";
+import img2 from "@/assets/images/projects/img-2.png";
+import img3 from "@/assets/images/projects/img-3.png";
+import img4 from "@/assets/images/projects/img-4.png";
+import img5 from "@/assets/images/projects/img-5.png";
+import img6 from "@/assets/images/projects/img-6.png";
+import img7 from "@/assets/images/projects/img-7.png";
+import img8 from "@/assets/images/projects/img-8.png";
 
 export default function Portfolio() {
   const [lightboxState, setLightboxState] = useState<{
