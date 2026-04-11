@@ -64,9 +64,10 @@ export default function Hero() {
           {/* Main Header */}
 
             <h1 className="text-2xl md:text-3xl font-bold text-foreground leading-tight">
-              Hello, I'm Abu Kowsar, Engr<span className="text-accent"> </span>
+              I'm Engr Abu Kowsar, <span className="text-accent"> </span>
             </h1>
-
+<span className="px-3 py-1 bg-blue-100 dark:bg-blue-900/30 text-blue-800 dark:text-blue-300 rounded-full text-sm font-semibold">PMP</span>
+                <span className="px-3 py-1 bg-green-100 dark:bg-green-900/30 text-green-800 dark:text-green-300 rounded-full text-sm font-semibold">PMI-ACP</span>
           {/* Animated Title */}
             <div
               className={`transition-all duration-1000 delay-400 ${
@@ -252,11 +253,8 @@ export default function Hero() {
             {/* Availability Badge */}
              <div className="text-center mb-6">
                <div className="flex items-center justify-center gap-3 mb-4 flex-wrap">
-                <h3 className="text-xl font-bold text-gray-900 dark:text-white">
-                  Engr Abu Kowsar
-                </h3>
-                <span className="px-3 py-1 bg-blue-100 dark:bg-blue-900/30 text-blue-800 dark:text-blue-300 rounded-full text-sm font-semibold">PMP</span>
-                <span className="px-3 py-1 bg-green-100 dark:bg-green-900/30 text-green-800 dark:text-green-300 rounded-full text-sm font-semibold">PMI-ACP</span>
+
+
               </div>
               <p className="text-lg font-semibold text-teal-600 dark:text-teal-400 mb-4">
                 Technical Project Manager
