@@ -8,7 +8,7 @@ import Header from "@/components/header";
 import Footer from "@/components/footer";
 
 // Import project images
-import img1 from "@/assets/images/projects/img-1.jpg";
+import img1 from "@/assets/images/projects/img-1.png";
 import img2 from "@/assets/images/projects/img-2.png";
 import img3 from "@/assets/images/projects/img-3.png";
 import img4 from "@/assets/images/projects/img-4.png";
