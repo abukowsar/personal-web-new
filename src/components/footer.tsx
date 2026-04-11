@@ -178,7 +178,7 @@ export default function Footer() {
                 Get in Touch
               </h5>
 
-              
+
 
               {/* Quick Contact Info */}
               <div className="space-y-3">
