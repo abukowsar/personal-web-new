@@ -26,12 +26,12 @@ export default function About() {
         "Working closely with analysts, designers and staff, Producing detailed specifications and writing the program codes, Testing the product in controlled, real situations before going live, Preparation of training manuals for users, Maintaining the systems once they are up and running.",
     },
     {
-      title: "Project Manager",
-      company: "Bright Tech Company, Ltd.",
+      title: "Assistant Programmer",
+      company: "PDBF, RDCD, Ministry of LGED & Co.",
       period: "2015 - 2019",
       duration: "4 years",
       description:
-        "Design, development, and maintenance of software solutions and databases that streamline organizational processes and improve service delivery for large-scale rollouts.",
+        "Design, development, and maintenance of software solutions and databases that streamline organizational processes and improve service delivery for large-scale rollouts of Micro-Credit ERP.",
     },
     {
       title: "Technical Project Manager",
@@ -52,7 +52,7 @@ export default function About() {
     {
       title: "Executive IT and Operation",
       company: "Bangkok Hospital Dhaka Office",
-      period: "2011 - 2012",
+      period: "2012 - 2012",
       duration: "1 year",
       description:
         "Managed multiple ERP application - Hospital Planning and Control System (HPCS) projects for manufacturing facilities throughout the Asia Pacific region.",
