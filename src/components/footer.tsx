@@ -178,23 +178,7 @@ export default function Footer() {
                 Get in Touch
               </h5>
 
-              {/* Availability Status */}
-              <div className="mb-4">
-                <div
-                  className={`inline-flex items-center gap-2 px-3 py-1.5 rounded-full text-xs font-medium ${
-                    isAvailable
-                      ? "bg-green-500/10 text-green-600 dark:text-green-400"
-                      : "bg-yellow-500/10 text-yellow-600 dark:text-yellow-400"
-                  }`}
-                >
-                  <span
-                    className={`w-2 h-2 rounded-full animate-pulse ${
-                      isAvailable ? "bg-green-500" : "bg-yellow-500"
-                    }`}
-                  />
-                  {isAvailable ? "Available for Projects" : "Currently Busy"}
-                </div>
-              </div>
+              
 
               {/* Quick Contact Info */}
               <div className="space-y-3">
