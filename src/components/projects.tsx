@@ -1,7 +1,7 @@
 "use client";
-import img1 from "@/assets/images/projects/img-1.jpg";
-import img2 from "@/assets/images/projects/img-13.png";
-import img3 from "@/assets/images/projects/img-14.png";
+import img1 from "@/assets/images/projects/img-1.png";
+import img2 from "@/assets/images/projects/img-2.png";
+import img3 from "@/assets/images/projects/img-3.png";
 import img4 from "@/assets/images/projects/img-15.png";
 import Image from "next/image";
 import ImageLightbox from "./image-lightbox";

@@ -140,7 +140,8 @@ export default function Hero() {
 </div>
 
 
-        <div className=" order-1 md:order-2 md:flex flex-col items-center justify-center relative h-96">
+        <div className="order-1 md:order-2 flex flex-col items-center w-full">
+          <div className="relative w-full h-[450px] flex items-center justify-center">
           {/* Main avatar circle */}
           <div className="absolute inset-0 flex items-center justify-center">
             <div className="relative w-60 h-60 rounded-full bg-gradient-to-br from-accent/30 to-accent/10 flex items-center justify-center border-2 border-accent/20">
@@ -245,8 +246,10 @@ export default function Hero() {
           <div className="absolute top-0 right-1/4 w-32 h-32 bg-accent/5 rounded-full blur-2xl"></div>
           <div className="absolute bottom-0 left-1/4 w-40 h-40 bg-accent/5 rounded-full blur-3xl"></div>
 
+          </div>
+
           <div
-            className={`absolute -bottom-5 md:bottom-0 left-1/2 transform -translate-x-1/2 flex gap-3 transition-all duration-1000 ${
+            className={`w-full flex flex-col items-center transition-all duration-1000 ${
               mounted ? "translate-y-0 opacity-100" : "translate-y-8 opacity-0"
             }`}
           >
@@ -310,7 +313,8 @@ export default function Hero() {
             </div>
           </div>
         </div>
-      </div></div>
+      </div>
+    </div>
       <style>{`
          @keyframes float {
           0%, 100% {

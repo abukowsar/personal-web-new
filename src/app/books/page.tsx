@@ -10,7 +10,7 @@ import Footer from "@/components/footer";
 import book1 from "@/assets/images/blog/book/book1.jpg";
 import book2 from "@/assets/images/projects/img-2.png";
 import book3 from "@/assets/images/projects/img-3.png";
-import book4 from "@/assets/images/projects/img-4.png";
+import book4 from "@/assets/images/projects/img-8.png";
 import book5 from "@/assets/images/projects/img-5.png";
 import book6 from "@/assets/images/projects/img-6.png";
 

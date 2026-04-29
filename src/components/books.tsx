@@ -7,7 +7,7 @@ import { Star, BookOpen, Download, ExternalLink } from "lucide-react";
 import book1 from "@/assets/images/blog/book/book1.jpg";
 import book2 from "@/assets/images/projects/img-2.png";
 import book3 from "@/assets/images/projects/img-3.png";
-import book4 from "@/assets/images/projects/img-4.png";
+import book4 from "@/assets/images/projects/img-8.png";
 
 export default function Books() {
   const books = [
