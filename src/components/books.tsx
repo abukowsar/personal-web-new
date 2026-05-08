@@ -4,10 +4,10 @@ import Image from "next/image";
 import { Star, BookOpen, Download, ExternalLink } from "lucide-react";
 
 // Import book cover images (using project images as placeholders)
-import book1 from "@/assets/images/blog/book/book1.jpg";
-import book2 from "@/assets/images/projects/img-2.png";
-import book3 from "@/assets/images/projects/img-3.png";
-import book4 from "@/assets/images/projects/img-8.png";
+import book1 from "@/assets/images/blog/book/book1.png";
+import book2 from "@/assets/images/blog/book/book2.png";
+import book3 from "@/assets/images/blog/book/book3.png";
+import book4 from "@/assets/images/blog/book/book4.png";
 
 export default function Books() {
   const books = [
