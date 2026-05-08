@@ -287,7 +287,7 @@ export default function Hero() {
                 {/* Social Links - Single Row */}
             <div className="flex justify-center gap-4">
               <a
-                href="https://github.com"
+                href="https://github.com/abukowsar"
                 target="_blank"
                 rel="noopener noreferrer"
                 className="flex items-center justify-center px-4 py-3 bg-gray-50 hover:bg-gray-100 dark:bg-gray-800/50 dark:hover:bg-gray-800/70 text-gray-600 dark:text-gray-400 hover:text-gray-700 dark:hover:text-gray-300 rounded-lg font-medium transition-all hover:scale-105 border border-gray-200/50 dark:border-gray-700/50"
@@ -295,7 +295,7 @@ export default function Hero() {
                 <span className="text-sm">GitHub</span>
               </a>
               <a
-                href="https://linkedin.com"
+                href="https://www.linkedin.com/in/abukowsar"
                 target="_blank"
                 rel="noopener noreferrer"
                 className="flex items-center justify-center px-4 py-3 bg-blue-50 hover:bg-blue-100 dark:bg-blue-900/20 dark:hover:bg-blue-900/30 text-blue-600 dark:text-blue-400 hover:text-blue-700 dark:hover:text-blue-300 rounded-lg font-medium transition-all hover:scale-105 border border-blue-200/50 dark:border-blue-800/50"
@@ -303,7 +303,7 @@ export default function Hero() {
                 <span className="text-sm">LinkedIn</span>
               </a>
               <a
-                href="https://upwork.com"
+                href="https://www.upwork.com/freelancers/~012c55c5f14b141b4a"
                 target="_blank"
                 rel="noopener noreferrer"
                 className="flex items-center justify-center px-4 py-3 bg-green-50 hover:bg-green-100 dark:bg-green-900/20 dark:hover:bg-green-900/30 text-green-600 dark:text-green-400 hover:text-green-700 dark:hover:text-green-300 rounded-lg font-medium transition-all hover:scale-105 border border-green-200/50 dark:border-green-800/50"
