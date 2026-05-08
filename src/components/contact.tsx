@@ -54,8 +54,8 @@ export default function Contact() {
     {
       icon: "📧",
       label: "Email",
-      value: "abu.kowsar@doict.gov.bd",
-      link: "mailto:abu.kowsar@doict.gov.bd",
+      value: "eng.abukowsar@gmail.com",
+      link: "mailto:eng.abukowsar@gmail.com",
     },
   ];
 

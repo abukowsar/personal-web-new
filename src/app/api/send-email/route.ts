@@ -16,7 +16,7 @@ export async function POST(req: Request) {
 
     const mailOptions = {
       from: email,
-      to: "abu.kowsar@doict.gov.bd",
+      to: "eng.abukowsar@gmail.com",
       subject: `💬 New Message from ${name}: ${subject}`,
       html: `
   <!DOCTYPE html>

@@ -54,6 +54,10 @@ export default function RootLayout({
   return (
     <html lang="en" suppressHydrationWarning>
       <head>
+        <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+        <link rel="icon" type="image/png" sizes="32x32" href="/favicon-16x16.png" />
+        <link rel="apple-touch-icon" sizes="180x180" href="/favicon.svg" />
+        <meta name="theme-color" content="#3B82F6" />
         <script suppressHydrationWarning>
           {`
             if (localStorage.getItem('theme') === 'dark' || (!localStorage.getItem('theme') && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
