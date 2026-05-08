@@ -239,6 +239,9 @@ export default function News() {
               <h1 className="text-4xl md:text-6xl font-bold text-foreground mb-6">
                 News Update
               </h1>
+              <p className="text-sm text-muted-foreground mb-4">
+                Latest insights and updates from the world of technology and innovation
+              </p>
               <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
                 I am pleased to share that I have successfully contributed to the development and launch of multiple technology-driven digital platforms, focusing on STEM education, Artificial Intelligence (AI), and Cyber Safety initiatives.
               </p>
@@ -247,7 +250,7 @@ export default function News() {
         </div>
 
         {/* Filter Categories */}
-        <div className="py-8 bg-background border-b">
+        <div className="py-8 bg-background">
           <div className="max-w-6xl mx-auto px-4">
             <div className="flex flex-wrap justify-center gap-4">
               {categories.map((category) => (

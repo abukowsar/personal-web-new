@@ -174,7 +174,7 @@ export default function Books() {
           </div>
         </div>
         {/* Filter Categories */}
-        <div className="py-8 bg-background border-b">
+        <div className="py-8 bg-background">
           <div className="max-w-6xl mx-auto px-4">
             <div className="flex flex-wrap justify-center gap-4">
               {categories.map((category) => (
