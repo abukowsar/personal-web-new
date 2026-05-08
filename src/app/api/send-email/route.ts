@@ -5,17 +5,30 @@ export async function POST(req: Request) {
   try {
     const { name, email, subject, message } = await req.json();
 
+    // Validate environment variables
+    if (!process.env.EMAIL_USER || !process.env.EMAIL_PASS) {
+      console.error("Missing EMAIL_USER or EMAIL_PASS in environment variables");
+      return NextResponse.json(
+        { success: false, message: "Email configuration error" },
+        { status: 500 }
+      );
+    }
+
     // Configure mail transporter
     const transporter = nodemailer.createTransport({
       service: "gmail",
       auth: {
-        user: process.env.EMAIL_USER, // Your Gmail
-        pass: process.env.EMAIL_PASS, // App Password
+        user: process.env.EMAIL_USER,
+        pass: process.env.EMAIL_PASS,
       },
     });
 
+    // Test the connection
+    await transporter.verify();
+
     const mailOptions = {
-      from: email,
+      from: process.env.EMAIL_USER, // Use configured email as sender
+      replyTo: email, // Set reply-to as the user's email
       to: "eng.abukowsar@gmail.com",
       subject: `💬 New Message from ${name}: ${subject}`,
       html: `
