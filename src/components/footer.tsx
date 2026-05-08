@@ -37,7 +37,7 @@ export default function Footer() {
     {
       label: "LinkedIn",
       icon: Linkedin,
-      url: "https://www.linkedin.com/in/abu-kowsar-pmp",
+      url: "https://www.linkedin.com/in/abukowsar",
     },
     {
       label: "YouTube",
@@ -146,7 +146,7 @@ export default function Footer() {
                   </div>
                   <div>
                     <a
-                      href="https://www.linkedin.com/in/abu-kowsar-pmp"
+                      href="https://www.linkedin.com/in/abukowsar"
                       target="_blank"
                       rel="noopener noreferrer"
                       className="text-sm font-medium text-foreground hover:text-primary transition-colors"
@@ -197,7 +197,7 @@ export default function Footer() {
 
                 <div className="flex items-center gap-3 text-sm text-muted-foreground">
                   <Clock className="w-4 h-4 text-primary/60" />
-                  <span>Response within 24 hours</span>
+                  <span>Response within 12 hours</span>
                 </div>
               </div>
 

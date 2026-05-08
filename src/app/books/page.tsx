@@ -7,12 +7,12 @@ import Header from "@/components/header";
 import Footer from "@/components/footer";
 
 // Import book cover images
-import book1 from "@/assets/images/blog/book/book1.jpg";
-import book2 from "@/assets/images/projects/img-2.png";
-import book3 from "@/assets/images/projects/img-3.png";
-import book4 from "@/assets/images/projects/img-8.png";
-import book5 from "@/assets/images/projects/img-5.png";
-import book6 from "@/assets/images/projects/img-6.png";
+import book1 from "@/assets/images/blog/book/book1.png";
+import book2 from "@/assets/images/blog/book/book2.png";
+import book3 from "@/assets/images/blog/book/book3.png";
+import book4 from "@/assets/images/blog/book/book4.png";
+import book5 from "@/assets/images/blog/book/book1.png";
+import book6 from "@/assets/images/blog/book/book2.png";
 
 export default function Books() {
   const allBooks = [
