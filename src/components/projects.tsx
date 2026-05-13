@@ -5,9 +5,46 @@ import img3 from "@/assets/images/projects/img-3.png";
 import img4 from "@/assets/images/projects/img-15.png";
 import Image from "next/image";
 import ImageLightbox from "./image-lightbox";
-import { useState } from "react";
+import { useEffect, useState } from "react";
+
+type Project = {
+  id?: string;
+  title: string;
+  description: string;
+  tags: string[];
+  image?: typeof img1;
+  imageUrl?: string;
+};
+
+const fallbackProjects: Project[] = [
+  {
+    title: "AI Based Factchecking Platform (Khoj-BD)",
+    description: "Artificial Intelligence Powered First Bangla Fact Checking Platform",
+    tags: ["React", "Node.js", "MongoDB"],
+    image: img1,
+  },
+  {
+    title: "LLM Platform (Bangla AI)",
+    description: "Modern AI solutions for all your Bengali language needs - anytime, anywhere",
+    tags: ["Next.js", "TypeScript", "TailwindCSS"],
+    image: img2,
+  },
+  {
+    title: "Complaint Management System",
+    description: "A Digital Solution centralizes and automates the process of handling complaints",
+    tags: ["React Native", "Firebase", "Redux"],
+    image: img3,
+  },
+  {
+    title: "ERP System",
+    description: "Enterprise Resource Planning, system is a type of business management",
+    tags: ["React", "Storybook", "CSS-in-JS"],
+    image: img4,
+  },
+];
 
 export default function Projects() {
+  const [projects, setProjects] = useState<Project[]>(fallbackProjects);
   const [lightboxState, setLightboxState] = useState<{
     isOpen: boolean;
     imageSrc: string;
@@ -17,32 +54,23 @@ export default function Projects() {
     imageSrc: "",
     imageAlt: "",
   });
-  const projects = [
-    {
-      title: "AI Based Factchecking Platform (Khoj-BD)",
-      description: "Artificial Intelligence Powered First Bangla Fact Checking Platform",
-      tags: ["React", "Node.js", "MongoDB"],
-      image: img1,
-    },
-    {
-      title: "LLM Platform (Bangla AI)",
-      description: "Modern AI solutions for all your Bengali language needs - anytime, anywhere",
-      tags: ["Next.js", "TypeScript", "TailwindCSS"],
-      image: img2,
-    },
-    {
-      title: "Complaint Management System",
-      description: "A Digital Solution centralizes and automates the process of handling complaints",
-      tags: ["React Native", "Firebase", "Redux"],
-      image: img3,
-    },
-    {
-      title: "ERP System",
-      description: "Enterprise Resource Planning, system is a type of business management",
-      tags: ["React", "Storybook", "CSS-in-JS"],
-      image: img4,
-    },
-  ];
+
+  useEffect(() => {
+    const loadProjects = async () => {
+      try {
+        const response = await fetch("/api/projects");
+        const data = await response.json();
+
+        if (Array.isArray(data.projects) && data.projects.length > 0) {
+          setProjects(data.projects);
+        }
+      } catch (error) {
+        console.error("Unable to load projects:", error);
+      }
+    };
+
+    loadProjects();
+  }, []);
 
   const handleImageClick = (imageSrc: string, imageAlt: string) => {
     setLightboxState({
@@ -75,20 +103,33 @@ export default function Projects() {
           <div className="grid md:grid-cols-2 gap-6">
             {projects.map((project, index) => (
               <div
-                key={index}
+                key={project.id || project.title}
                 className="group bg-card border border-border rounded-xl overflow-hidden hover:border-accent transition-all hover:shadow-lg"
               >
                 <div className="h-48 bg-gradient-to-br from-accent/10 to-accent/5 flex items-center justify-center group-hover:from-accent/20 transition-colors overflow-hidden">
-                  <Image
-                    src={project.image}
-                    alt={project.title}
-                    width={300}
-                    height={300}
-                    className="w-full"
-                    onClick={() =>
-                      handleImageClick(project.image.src, project.title)
-                    }
-                  />
+                  {project.imageUrl ? (
+                    <img
+                      src={project.imageUrl}
+                      alt={project.title}
+                      className="h-full w-full cursor-pointer object-cover"
+                      onClick={() =>
+                        handleImageClick(project.imageUrl || "", project.title)
+                      }
+                    />
+                  ) : (
+                    project.image && (
+                      <Image
+                        src={project.image}
+                        alt={project.title}
+                        width={300}
+                        height={300}
+                        className="w-full cursor-pointer"
+                        onClick={() =>
+                          handleImageClick(project.image?.src || "", project.title)
+                        }
+                      />
+                    )
+                  )}
                 </div>
                 <div className="p-6">
                   <h3 className="text-xl font-bold text-foreground mb-2">

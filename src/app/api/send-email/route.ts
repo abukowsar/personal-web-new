@@ -1,18 +1,42 @@
 import { NextResponse } from "next/server";
+import { getDatabase } from "@/lib/mongodb";
 import nodemailer from "nodemailer";
+
+export const runtime = "nodejs";
 
 export async function POST(req: Request) {
   try {
     const { name, email, subject, message } = await req.json();
 
-    // Validate environment variables
-    if (!process.env.EMAIL_USER || !process.env.EMAIL_PASS) {
-      console.error("Missing EMAIL_USER or EMAIL_PASS in environment variables");
+    if (!name || !email || !subject || !message) {
       return NextResponse.json(
-        { success: false, message: "Email configuration error" },
+        { success: false, message: "All fields are required" },
+        { status: 400 }
+      );
+    }
+
+    // Validate environment variables
+    if (
+      !process.env.EMAIL_USER ||
+      !process.env.EMAIL_PASS ||
+      !process.env.MONGODB_URI
+    ) {
+      console.error("Missing required email or MongoDB environment variables");
+      return NextResponse.json(
+        { success: false, message: "Server configuration error" },
         { status: 500 }
       );
     }
+
+    const db = await getDatabase();
+    await db.collection("contact_messages").insertOne({
+      name,
+      email,
+      subject,
+      message,
+      status: "new",
+      createdAt: new Date(),
+    });
 
     // Configure mail transporter
     const transporter = nodemailer.createTransport({
