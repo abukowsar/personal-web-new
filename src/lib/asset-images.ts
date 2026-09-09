@@ -1,7 +1,8 @@
 import path from "path";
 import { readdir } from "fs/promises";
 
-const allowedExtensions = new Set([".jpg", ".jpeg", ".png", ".webp", ".gif", ".svg"]);
+const imageExtensions = new Set([".jpg", ".jpeg", ".png", ".webp", ".gif", ".svg"]);
+const pdfExtensions = new Set([".pdf"]);
 
 export const imagesRoot = path.join(process.cwd(), "src", "assets", "images");
 
@@ -11,18 +12,19 @@ export type AssetImage = {
   url: string;
 };
 
-export async function listAssetImages(
+async function listAssetsByExtensions(
+  allowedExtensions: Set<string>,
   directory = imagesRoot,
   prefix = ""
 ): Promise<AssetImage[]> {
   const entries = await readdir(directory, { withFileTypes: true });
-  const images = await Promise.all(
+  const assets = await Promise.all(
     entries.map(async (entry) => {
       const relativePath = path.posix.join(prefix, entry.name);
       const absolutePath = path.join(directory, entry.name);
 
       if (entry.isDirectory()) {
-        return listAssetImages(absolutePath, relativePath);
+        return listAssetsByExtensions(allowedExtensions, absolutePath, relativePath);
       }
 
       if (!allowedExtensions.has(path.extname(entry.name).toLowerCase())) {
@@ -39,7 +41,15 @@ export async function listAssetImages(
     })
   );
 
-  return images.flat().sort((first, second) => first.path.localeCompare(second.path));
+  return assets.flat().sort((first, second) => first.path.localeCompare(second.path));
+}
+
+export function listAssetImages(directory = imagesRoot, prefix = "") {
+  return listAssetsByExtensions(imageExtensions, directory, prefix);
+}
+
+export function listAssetPdfs(directory = imagesRoot, prefix = "") {
+  return listAssetsByExtensions(pdfExtensions, directory, prefix);
 }
 
 export function getAssetMimeType(filePath: string) {
@@ -49,6 +59,7 @@ export function getAssetMimeType(filePath: string) {
   if (extension === ".jpg" || extension === ".jpeg") return "image/jpeg";
   if (extension === ".webp") return "image/webp";
   if (extension === ".gif") return "image/gif";
+  if (extension === ".pdf") return "application/pdf";
 
   return "image/png";
 }

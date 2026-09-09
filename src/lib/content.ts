@@ -51,6 +51,7 @@ export const contentConfig = {
       icon: "Book",
       downloadUrl: "#",
       previewUrl: "#",
+      pdfUrl: "",
       featured: true,
     },
   },
@@ -119,6 +120,14 @@ export function validateContentInput(type: ContentType, input: Document) {
     !String(input.imageUrl).startsWith("/api/assets/")
   ) {
     return "Image URL must start with http://, https://, or /api/assets/";
+  }
+
+  if (
+    input.pdfUrl &&
+    !/^https?:\/\//.test(String(input.pdfUrl)) &&
+    !String(input.pdfUrl).startsWith("/api/assets/")
+  ) {
+    return "PDF URL must start with http://, https://, or /api/assets/";
   }
 
   return null;

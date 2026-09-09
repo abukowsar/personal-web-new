@@ -1,8 +1,9 @@
 import { NextResponse } from "next/server";
-import { isAdminAuthenticated } from "@/lib/auth";
+import { getAdminSessionEmail } from "@/lib/auth";
 
 export const runtime = "nodejs";
 
 export async function GET() {
-  return NextResponse.json({ authenticated: await isAdminAuthenticated() });
+  const email = await getAdminSessionEmail();
+  return NextResponse.json({ authenticated: email !== null, email });
 }

@@ -3,7 +3,9 @@
 import { FormEvent, useEffect, useMemo, useState } from "react";
 import { useRouter, useSearchParams } from "next/navigation";
 import {
+  AlertCircle,
   BookOpen,
+  CheckCircle2,
   FolderKanban,
   ImageIcon,
   Newspaper,
@@ -13,6 +15,10 @@ import {
   Trash2,
   X,
 } from "lucide-react";
+import BookCoverArt from "@/components/book-cover-art";
+
+const COVER_ART_WIDTH = 192;
+const COVER_ART_HEIGHT = 256;
 
 export type Section = "projects" | "blog" | "books";
 
@@ -43,9 +49,16 @@ type Item = {
   price?: string;
   downloadUrl?: string;
   previewUrl?: string;
+  pdfUrl?: string;
 };
 
 type AssetImage = {
+  name: string;
+  path: string;
+  url: string;
+};
+
+type AssetFile = {
   name: string;
   path: string;
   url: string;
@@ -59,10 +72,10 @@ const sectionConfig = {
     description: "Add and manage portfolio projects shown on the homepage projects section.",
   },
   blog: {
-    label: "Blog",
-    singular: "Blog Post",
+    label: "News",
+    singular: "News Post",
     icon: Newspaper,
-    description: "Add and manage news and article cards shown in the blog section.",
+    description: "Add and manage news and article cards shown in the News section.",
   },
   books: {
     label: "Books",
@@ -117,6 +130,7 @@ const emptyForms = {
     icon: "Book",
     downloadUrl: "#",
     previewUrl: "#",
+    pdfUrl: "",
     featured: true,
   },
 };
@@ -126,36 +140,58 @@ export default function ContentManager({ section }: { section: Section }) {
   const searchParams = useSearchParams();
   const [loading, setLoading] = useState(true);
   const [saving, setSaving] = useState(false);
-  const [message, setMessage] = useState("");
+  const [message, setMessage] = useState<{ text: string; type: "success" | "error" } | null>(null);
   const [items, setItems] = useState<Item[]>([]);
+  const [search, setSearch] = useState("");
   const [form, setForm] = useState(emptyForms[section]);
   const [editingId, setEditingId] = useState<string | null>(null);
+  const [deleteTarget, setDeleteTarget] = useState<Item | null>(null);
+
+  const notify = (text: string, type: "success" | "error") => {
+    setMessage({ text, type });
+  };
+
+  useEffect(() => {
+    if (!message) return;
+    const timer = setTimeout(() => setMessage(null), 4500);
+    return () => clearTimeout(timer);
+  }, [message]);
 
   const config = useMemo(() => sectionConfig[section], [section]);
   const Icon = config.icon;
 
   const loadItems = async () => {
     setLoading(true);
-    const response = await fetch(`/api/admin/content/${section}`);
+    try {
+      const response = await fetch(`/api/admin/content/${section}`);
 
-    if (response.status === 401) {
-      router.push("/login");
-      return;
-    }
-
-    const data = await response.json();
-    const loadedItems = data.items || [];
-    setItems(loadedItems);
-    setLoading(false);
-
-    const editId = searchParams.get("edit");
-
-    if (editId) {
-      const item = loadedItems.find((contentItem: Item) => contentItem.id === editId);
-
-      if (item) {
-        startEditing(item, false);
+      if (response.status === 401) {
+        router.push("/login");
+        return;
       }
+
+      const data = await response.json();
+
+      if (!response.ok) {
+        throw new Error(data.message || `Unable to load ${config.label.toLowerCase()}`);
+      }
+
+      const loadedItems = data.items || [];
+      setItems(loadedItems);
+
+      const editId = searchParams.get("edit");
+
+      if (editId) {
+        const item = loadedItems.find((contentItem: Item) => contentItem.id === editId);
+
+        if (item) {
+          startEditing(item, false);
+        }
+      }
+    } catch (error) {
+      notify(error instanceof Error ? error.message : "Unable to load content", "error");
+    } finally {
+      setLoading(false);
     }
   };
 
@@ -182,54 +218,81 @@ export default function ContentManager({ section }: { section: Section }) {
   const handleSubmit = async (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     setSaving(true);
-    setMessage("");
+    setMessage(null);
 
-    const response = await fetch(
-      editingId
-        ? `/api/admin/content/${section}/${editingId}`
-        : `/api/admin/content/${section}`,
-      {
-      method: editingId ? "PUT" : "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify(form),
-      }
-    );
-    const data = await response.json();
-
-    if (!response.ok) {
-      setMessage(data.message || "Item could not be saved");
-      setSaving(false);
-      return;
-    }
-
-    if (editingId) {
-      setItems((current) =>
-        current.map((item) => (item.id === editingId ? data.item : item))
+    try {
+      const response = await fetch(
+        editingId
+          ? `/api/admin/content/${section}/${editingId}`
+          : `/api/admin/content/${section}`,
+        {
+          method: editingId ? "PUT" : "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify(form),
+        }
       );
-      setMessage(`${config.singular} updated successfully`);
-      cancelEditing();
-    } else {
-      setItems((current) => [data.item, ...current]);
-      setForm(emptyForms[section]);
-      setMessage(`${config.singular} saved successfully`);
-    }
+      const data = await response.json();
 
-    setSaving(false);
+      if (!response.ok) {
+        notify(data.message || "Item could not be saved", "error");
+        return;
+      }
+
+      if (editingId) {
+        setItems((current) =>
+          current.map((item) => (item.id === editingId ? data.item : item))
+        );
+        notify(`${config.singular} updated successfully`, "success");
+        cancelEditing();
+      } else {
+        setItems((current) => [data.item, ...current]);
+        setForm(emptyForms[section]);
+        notify(`${config.singular} saved successfully`, "success");
+      }
+    } catch {
+      notify("Network error: content could not be saved", "error");
+    } finally {
+      setSaving(false);
+    }
   };
 
-  const deleteItem = async (id: string) => {
-    const response = await fetch(`/api/admin/content/${section}/${id}`, {
-      method: "DELETE",
-    });
+  const confirmDelete = async () => {
+    if (!deleteTarget) return;
+    const item = deleteTarget;
+    setDeleteTarget(null);
 
-    if (response.ok) {
-      setItems((current) => current.filter((item) => item.id !== id));
+    try {
+      const response = await fetch(`/api/admin/content/${section}/${item.id}`, {
+        method: "DELETE",
+      });
+
+      if (!response.ok) {
+        const data = await response.json();
+        throw new Error(data.message || "Item could not be deleted");
+      }
+
+      setItems((current) => current.filter((contentItem) => contentItem.id !== item.id));
+      notify(`${config.singular} deleted successfully`, "success");
+    } catch (error) {
+      notify(error instanceof Error ? error.message : "Item could not be deleted", "error");
     }
   };
+
+  const filteredItems = useMemo(() => {
+    const normalizedSearch = search.trim().toLowerCase();
+
+    if (!normalizedSearch) return items;
+
+    return items.filter((item) =>
+      [item.title, item.category, item.description, item.excerpt]
+        .filter(Boolean)
+        .some((value) => String(value).toLowerCase().includes(normalizedSearch))
+    );
+  }, [items, search]);
 
   const startEditing = (item: Item, updateUrl = true) => {
     setEditingId(item.id);
-    setMessage("");
+    setMessage(null);
     setForm(mapItemToForm(section, item));
 
     if (updateUrl) {
@@ -271,8 +334,19 @@ export default function ContentManager({ section }: { section: Section }) {
           <FormFields active={section} form={form} updateForm={updateForm} />
 
           {message && (
-            <p className="mt-4 rounded-lg border border-border bg-background px-3 py-2 text-sm">
-              {message}
+            <p
+              className={`mt-4 flex items-start gap-2 rounded-lg border px-3 py-2 text-sm ${
+                message.type === "success"
+                  ? "border-emerald-300 bg-emerald-50 text-emerald-900 dark:border-emerald-800 dark:bg-emerald-950/30 dark:text-emerald-200"
+                  : "border-destructive/30 bg-destructive/10 text-destructive"
+              }`}
+            >
+              {message.type === "success" ? (
+                <CheckCircle2 className="mt-0.5 h-4 w-4 shrink-0" />
+              ) : (
+                <AlertCircle className="mt-0.5 h-4 w-4 shrink-0" />
+              )}
+              {message.text}
             </p>
           )}
 
@@ -303,21 +377,35 @@ export default function ContentManager({ section }: { section: Section }) {
 
         <section>
           <div className="mb-4 flex items-center justify-between gap-3">
-            <h2 className="text-xl font-bold">{config.label} Table</h2>
-            <button
-              onClick={loadItems}
-              className="inline-flex min-h-10 items-center justify-center gap-2 rounded-lg border border-border px-3 text-sm font-semibold transition hover:bg-muted"
-            >
-              <RefreshCw className="h-4 w-4" />
-              Refresh
-            </button>
+            <div>
+              <h2 className="text-xl font-bold">{config.label} Table</h2>
+              <p className="mt-1 text-xs text-muted-foreground">
+                Showing {filteredItems.length} of {items.length}
+              </p>
+            </div>
+            <div className="flex gap-2">
+              <input
+                value={search}
+                onChange={(event) => setSearch(event.target.value)}
+                placeholder={`Search ${config.label.toLowerCase()}`}
+                aria-label={`Search ${config.label.toLowerCase()}`}
+                className="min-h-10 w-44 rounded-lg border border-border bg-background px-3 text-sm outline-none focus:border-primary focus:ring-2 focus:ring-primary/20"
+              />
+              <button
+                onClick={loadItems}
+                className="inline-flex min-h-10 items-center justify-center gap-2 rounded-lg border border-border px-3 text-sm font-semibold transition hover:bg-muted"
+              >
+                <RefreshCw className="h-4 w-4" />
+                Refresh
+              </button>
+            </div>
           </div>
 
           <div className="overflow-x-auto rounded-lg border border-border bg-card">
-            <table className="w-full min-w-[760px] text-left text-sm">
+            <table className="w-full min-w-[820px] text-left text-sm">
               <thead className="border-b border-border bg-muted/50 text-xs uppercase text-muted-foreground">
                 <tr>
-                  <th className="px-4 py-3">Title</th>
+                  <th className="px-4 py-3">Item</th>
                   <th className="px-4 py-3">Category</th>
                   <th className="px-4 py-3">Meta</th>
                   <th className="px-4 py-3">Summary</th>
@@ -327,22 +415,62 @@ export default function ContentManager({ section }: { section: Section }) {
               </thead>
               <tbody>
                 {loading ? (
+                  Array.from({ length: 4 }).map((_, index) => (
+                    <tr key={index} className="border-b border-border last:border-0">
+                      {Array.from({ length: 6 }).map((__, cell) => (
+                        <td key={cell} className="px-4 py-4">
+                          <div className="h-4 animate-pulse rounded bg-muted" />
+                        </td>
+                      ))}
+                    </tr>
+                  ))
+                ) : filteredItems.length === 0 ? (
                   <tr>
-                    <td className="px-4 py-8 text-muted-foreground" colSpan={6}>
-                      Loading {config.label.toLowerCase()}...
-                    </td>
-                  </tr>
-                ) : items.length === 0 ? (
-                  <tr>
-                    <td className="px-4 py-8 text-muted-foreground" colSpan={6}>
-                      No {config.label.toLowerCase()} added yet.
+                    <td className="px-4 py-10 text-center text-muted-foreground" colSpan={6}>
+                      {items.length === 0
+                        ? `No ${config.label.toLowerCase()} added yet.`
+                        : "No matching content found."}
                     </td>
                   </tr>
                 ) : (
-                  items.map((item) => (
-                    <tr key={item.id} className="border-b border-border last:border-0">
-                      <td className="max-w-[220px] px-4 py-3 font-semibold">
-                        {item.title}
+                  filteredItems.map((item) => (
+                    <tr key={item.id} className="border-b border-border last:border-0 hover:bg-muted/30">
+                      <td className="max-w-[260px] px-4 py-3">
+                        <div className="flex items-center gap-3">
+                          <div
+                            className={`shrink-0 overflow-hidden rounded-lg border border-border bg-muted ${
+                              section === "books" ? "h-14 w-10" : "h-10 w-10"
+                            }`}
+                          >
+                            {item.imageUrl ? (
+                              // eslint-disable-next-line @next/next/no-img-element
+                              <img src={item.imageUrl} alt="" className="h-full w-full object-cover" />
+                            ) : section === "books" ? (
+                              <div
+                                style={{
+                                  width: COVER_ART_WIDTH,
+                                  height: COVER_ART_HEIGHT,
+                                  transform: `scale(${40 / COVER_ART_WIDTH})`,
+                                  transformOrigin: "top left",
+                                }}
+                              >
+                                <BookCoverArt
+                                  title={item.title}
+                                  subtitle={item.subtitle}
+                                  author={item.author}
+                                  category={item.category}
+                                  color={item.color}
+                                  icon={item.icon}
+                                />
+                              </div>
+                            ) : (
+                              <div className="flex h-full w-full items-center justify-center text-muted-foreground">
+                                <ImageIcon className="h-4 w-4" />
+                              </div>
+                            )}
+                          </div>
+                          <span className="truncate font-semibold">{item.title}</span>
+                        </div>
                       </td>
                       <td className="px-4 py-3">{item.category || "General"}</td>
                       <td className="px-4 py-3 text-muted-foreground">
@@ -352,10 +480,20 @@ export default function ContentManager({ section }: { section: Section }) {
                             ? item.year || item.status
                             : item.status || item.author || "Published"}
                       </td>
-                      <td className="max-w-[260px] px-4 py-3 text-muted-foreground">
+                      <td className="max-w-[260px] truncate px-4 py-3 text-muted-foreground">
                         {item.excerpt || item.description || item.tags?.join(", ")}
                       </td>
-                      <td className="px-4 py-3">{item.featured ? "Yes" : "No"}</td>
+                      <td className="px-4 py-3">
+                        <span
+                          className={`inline-flex items-center rounded-full px-2.5 py-1 text-xs font-semibold ${
+                            item.featured
+                              ? "bg-primary/10 text-primary"
+                              : "bg-muted text-muted-foreground"
+                          }`}
+                        >
+                          {item.featured ? "Featured" : "Standard"}
+                        </span>
+                      </td>
                       <td className="px-4 py-3">
                         <div className="flex items-center gap-2">
                           <button
@@ -366,7 +504,7 @@ export default function ContentManager({ section }: { section: Section }) {
                             <Pencil className="h-4 w-4" />
                           </button>
                           <button
-                            onClick={() => deleteItem(item.id)}
+                            onClick={() => setDeleteTarget(item)}
                             className="inline-flex h-9 w-9 items-center justify-center rounded-lg border border-border text-destructive transition hover:bg-destructive/10"
                             aria-label={`Delete ${item.title}`}
                           >
@@ -382,6 +520,40 @@ export default function ContentManager({ section }: { section: Section }) {
           </div>
         </section>
       </div>
+
+      {deleteTarget && (
+        <div
+          className="fixed inset-0 z-50 flex items-center justify-center bg-black/50 px-4"
+          role="dialog"
+          aria-modal="true"
+        >
+          <div className="w-full max-w-sm rounded-lg border border-border bg-card p-5 shadow-lg">
+            <div className="mb-3 flex h-11 w-11 items-center justify-center rounded-lg bg-destructive/10 text-destructive">
+              <Trash2 className="h-5 w-5" />
+            </div>
+            <h3 className="text-lg font-bold">Delete {config.singular.toLowerCase()}?</h3>
+            <p className="mt-2 text-sm text-muted-foreground">
+              This will permanently remove <span className="font-semibold text-foreground">{deleteTarget.title}</span> from MongoDB. This cannot be undone.
+            </p>
+            <div className="mt-5 flex gap-3">
+              <button
+                type="button"
+                onClick={() => setDeleteTarget(null)}
+                className="inline-flex min-h-10 flex-1 items-center justify-center rounded-lg border border-border text-sm font-semibold transition hover:bg-muted"
+              >
+                Cancel
+              </button>
+              <button
+                type="button"
+                onClick={confirmDelete}
+                className="inline-flex min-h-10 flex-1 items-center justify-center rounded-lg bg-destructive text-sm font-semibold text-destructive-foreground transition hover:opacity-90"
+              >
+                Delete
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
     </div>
   );
 }
@@ -433,6 +605,7 @@ function mapItemToForm(section: Section, item: Item) {
     icon: item.icon || "Book",
     downloadUrl: item.downloadUrl || "#",
     previewUrl: item.previewUrl || "#",
+    pdfUrl: item.pdfUrl || "",
     featured: Boolean(item.featured),
   };
 }
@@ -503,6 +676,7 @@ function FormFields({
       </div>
       <Field label="Price" value={String(form.price)} onChange={(value) => updateForm("price", value)} />
       <ImageField value={String(form.imageUrl)} onChange={(value) => updateForm("imageUrl", value)} />
+      <PdfField value={String(form.pdfUrl)} onChange={(value) => updateForm("pdfUrl", value)} />
       <Field label="Download URL" value={String(form.downloadUrl)} onChange={(value) => updateForm("downloadUrl", value)} />
       <Field label="Preview URL" value={String(form.previewUrl)} onChange={(value) => updateForm("previewUrl", value)} />
       <Featured checked={Boolean(form.featured)} onChange={(value) => updateForm("featured", value)} />
@@ -599,6 +773,66 @@ function ImageField({
           />
         </div>
       )}
+    </div>
+  );
+}
+
+function PdfField({
+  value,
+  onChange,
+}: {
+  value: string;
+  onChange: (value: string) => void;
+}) {
+  const [files, setFiles] = useState<AssetFile[]>([]);
+
+  useEffect(() => {
+    const loadFiles = async () => {
+      const response = await fetch("/api/admin/assets?type=pdf");
+
+      if (response.ok) {
+        const data = await response.json();
+        setFiles(data.files || []);
+      }
+    };
+
+    loadFiles();
+  }, []);
+
+  return (
+    <div className="rounded-lg border border-border bg-background p-3">
+      <div className="mb-3 flex items-center gap-2 text-sm font-medium">
+        <BookOpen className="h-4 w-4 text-primary" />
+        Book PDF (readable as a flip book)
+      </div>
+
+      <label className="mb-3 block text-sm font-medium">
+        <span className="mb-2 block text-muted-foreground">Browse assets/books</span>
+        <select
+          value={value.startsWith("/api/assets/") ? value : ""}
+          onChange={(event) => onChange(event.target.value)}
+          className="min-h-11 w-full rounded-lg border border-border bg-card px-3 outline-none transition focus:border-primary focus:ring-2 focus:ring-primary/20"
+        >
+          <option value="">Select PDF from assets</option>
+          {files.map((file) => (
+            <option key={file.path} value={file.url}>
+              {file.path}
+            </option>
+          ))}
+        </select>
+      </label>
+
+      <Field
+        label="PDF URL"
+        value={value}
+        onChange={onChange}
+        placeholder="https://example.com/book.pdf or /api/assets/books/my-book.pdf"
+      />
+
+      <p className="mt-2 text-xs text-muted-foreground">
+        When set, the book&apos;s &quot;Read&quot; button opens this PDF as a page-turning flip book
+        instead of a plain download.
+      </p>
     </div>
   );
 }

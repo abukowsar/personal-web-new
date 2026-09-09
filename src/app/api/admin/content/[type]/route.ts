@@ -40,10 +40,23 @@ export async function GET(
     );
   }
 
-  const collection = await getContentCollection(type);
-  const items = await collection.find({}).sort({ createdAt: -1 }).toArray();
+  try {
+    const collection = await getContentCollection(type);
+    const items = await collection.find({}).sort({ createdAt: -1 }).toArray();
 
-  return NextResponse.json({ items: items.map(mapContentItem) });
+    return NextResponse.json({ items: items.map(mapContentItem) });
+  } catch (error) {
+    return NextResponse.json(
+      {
+        success: false,
+        message:
+          error instanceof Error
+            ? `Database connection failed: ${error.message}`
+            : "Database connection failed",
+      },
+      { status: 500 }
+    );
+  }
 }
 
 export async function POST(
@@ -75,16 +88,29 @@ export async function POST(
     );
   }
 
-  const now = new Date();
-  const collection = await getContentCollection(type);
-  const result = await collection.insertOne({
-    ...input,
-    createdAt: now,
-    updatedAt: now,
-  });
+  try {
+    const now = new Date();
+    const collection = await getContentCollection(type);
+    const result = await collection.insertOne({
+      ...input,
+      createdAt: now,
+      updatedAt: now,
+    });
 
-  return NextResponse.json({
-    success: true,
-    item: mapContentItem({ _id: result.insertedId, ...input, createdAt: now }),
-  });
+    return NextResponse.json({
+      success: true,
+      item: mapContentItem({ _id: result.insertedId, ...input, createdAt: now }),
+    });
+  } catch (error) {
+    return NextResponse.json(
+      {
+        success: false,
+        message:
+          error instanceof Error
+            ? `Database connection failed: ${error.message}`
+            : "Database connection failed",
+      },
+      { status: 500 }
+    );
+  }
 }

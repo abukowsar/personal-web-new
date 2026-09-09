@@ -40,10 +40,23 @@ export async function DELETE(
     );
   }
 
-  const collection = await getContentCollection(type);
-  await collection.deleteOne({ _id: objectId });
+  try {
+    const collection = await getContentCollection(type);
+    await collection.deleteOne({ _id: objectId });
 
-  return NextResponse.json({ success: true });
+    return NextResponse.json({ success: true });
+  } catch (error) {
+    return NextResponse.json(
+      {
+        success: false,
+        message:
+          error instanceof Error
+            ? `Database connection failed: ${error.message}`
+            : "Database connection failed",
+      },
+      { status: 500 }
+    );
+  }
 }
 
 export async function PUT(
@@ -85,23 +98,36 @@ export async function PUT(
     );
   }
 
-  const collection = await getContentCollection(type);
-  const updatedAt = new Date();
+  try {
+    const collection = await getContentCollection(type);
+    const updatedAt = new Date();
 
-  await collection.updateOne(
-    { _id: objectId },
-    {
-      $set: {
-        ...input,
-        updatedAt,
+    await collection.updateOne(
+      { _id: objectId },
+      {
+        $set: {
+          ...input,
+          updatedAt,
+        },
+      }
+    );
+
+    const item = await collection.findOne({ _id: objectId });
+
+    return NextResponse.json({
+      success: true,
+      item: item ? mapContentItem(item) : null,
+    });
+  } catch (error) {
+    return NextResponse.json(
+      {
+        success: false,
+        message:
+          error instanceof Error
+            ? `Database connection failed: ${error.message}`
+            : "Database connection failed",
       },
-    }
-  );
-
-  const item = await collection.findOne({ _id: objectId });
-
-  return NextResponse.json({
-    success: true,
-    item: item ? mapContentItem(item) : null,
-  });
+      { status: 500 }
+    );
+  }
 }

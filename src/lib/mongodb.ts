@@ -8,8 +8,7 @@ const options = {
   },
 };
 
-let client: MongoClient;
-let clientPromise: Promise<MongoClient>;
+let clientPromise: Promise<MongoClient> | undefined;
 
 declare global {
   // eslint-disable-next-line no-var
@@ -29,14 +28,22 @@ function getClientPromise() {
 
   if (process.env.NODE_ENV === "development") {
     if (!global._mongoClientPromise) {
-      client = new MongoClient(uri, options);
-      global._mongoClientPromise = client.connect();
+      global._mongoClientPromise = new MongoClient(uri, options)
+        .connect()
+        .catch((error) => {
+          // Don't cache a failed connection attempt — let the next request retry
+          // (e.g. after fixing Atlas Network Access) instead of failing forever.
+          global._mongoClientPromise = undefined;
+          throw error;
+        });
     }
 
     clientPromise = global._mongoClientPromise;
   } else {
-    client = new MongoClient(uri, options);
-    clientPromise = client.connect();
+    clientPromise = new MongoClient(uri, options).connect().catch((error) => {
+      clientPromise = undefined;
+      throw error;
+    });
   }
 
   return clientPromise;

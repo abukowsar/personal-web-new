@@ -2,12 +2,10 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import Image from "next/image";
 import { BookOpen, Download, ExternalLink, Star } from "lucide-react";
-import book1 from "@/assets/images/blog/book/book1.png";
-import book2 from "@/assets/images/blog/book/book2.png";
-import book3 from "@/assets/images/blog/book/book3.png";
-import book4 from "@/assets/images/blog/book/book4.png";
+import BookCoverArt from "@/components/book-cover-art";
+import BookCoverPreview from "@/components/book-cover-preview";
+import FlipBookReader from "@/components/flip-book-reader";
 
 type Book = {
   id: string | number;
@@ -22,12 +20,12 @@ type Book = {
   language: string;
   publishYear: string;
   price: string;
-  image?: typeof book1;
   imageUrl?: string;
   color: string;
   icon: string;
   downloadUrl: string;
   previewUrl: string;
+  pdfUrl?: string;
 };
 
 const fallbackBooks: Book[] = [
@@ -45,7 +43,6 @@ const fallbackBooks: Book[] = [
     language: "English",
     publishYear: "2024",
     price: "$0.99",
-    image: book1,
     color: "bg-blue-500",
     icon: "Book",
     downloadUrl: "#",
@@ -65,7 +62,6 @@ const fallbackBooks: Book[] = [
     language: "English",
     publishYear: "2024",
     price: "$34.99",
-    image: book2,
     color: "bg-purple-500",
     icon: "AI",
     downloadUrl: "#",
@@ -85,7 +81,6 @@ const fallbackBooks: Book[] = [
     language: "English",
     publishYear: "2023",
     price: "$27.99",
-    image: book3,
     color: "bg-green-500",
     icon: "Lead",
     downloadUrl: "#",
@@ -105,7 +100,6 @@ const fallbackBooks: Book[] = [
     language: "English",
     publishYear: "2023",
     price: "$31.99",
-    image: book4,
     color: "bg-orange-500",
     icon: "Tech",
     downloadUrl: "#",
@@ -115,6 +109,8 @@ const fallbackBooks: Book[] = [
 
 export default function Books() {
   const [books, setBooks] = useState<Book[]>(fallbackBooks);
+  const [readerBook, setReaderBook] = useState<Book | null>(null);
+  const [coverPreviewBook, setCoverPreviewBook] = useState<Book | null>(null);
 
   useEffect(() => {
     const loadBooks = async () => {
@@ -159,7 +155,12 @@ export default function Books() {
               className="group relative bg-card border border-border/50 rounded-2xl overflow-hidden hover:border-primary/30 transition-all duration-300 hover:shadow-2xl hover:shadow-primary/10"
             >
               <div className="flex flex-col md:flex-row">
-                <div className="relative md:w-48 h-64 md:h-auto bg-gradient-to-br from-secondary to-muted overflow-hidden">
+                <button
+                  type="button"
+                  onClick={() => setCoverPreviewBook(book)}
+                  aria-label={`Preview cover of ${book.title}`}
+                  className="relative block w-full md:w-48 h-64 md:h-auto appearance-none border-0 bg-gradient-to-br from-secondary to-muted p-0 text-left overflow-hidden cursor-zoom-in"
+                >
                   {book.imageUrl ? (
                     <img
                       src={book.imageUrl}
@@ -167,30 +168,34 @@ export default function Books() {
                       className="h-full w-full object-cover group-hover:scale-110 transition-transform duration-500"
                     />
                   ) : (
-                    book.image && (
-                      <Image
-                        src={book.image}
-                        alt={book.title}
-                        fill
-                        className="object-cover group-hover:scale-110 transition-transform duration-500"
-                      />
-                    )
+                    <BookCoverArt
+                      title={book.title}
+                      subtitle={book.subtitle}
+                      author={book.author}
+                      category={book.category}
+                      color={book.color}
+                      icon={book.icon}
+                    />
                   )}
 
-                  <div
-                    className={`absolute -bottom-4 -right-4 w-16 h-16 ${book.color} rounded-xl flex items-center justify-center transform rotate-12 group-hover:rotate-0 transition-transform duration-300`}
-                  >
-                    <span className="text-xs font-bold text-white transform -rotate-12 group-hover:rotate-0 transition-transform duration-300">
-                      {book.icon}
-                    </span>
-                  </div>
+                  {book.imageUrl && (
+                    <>
+                      <div
+                        className={`absolute -bottom-4 -right-4 w-16 h-16 ${book.color} rounded-xl flex items-center justify-center transform rotate-12 group-hover:rotate-0 transition-transform duration-300`}
+                      >
+                        <span className="text-xs font-bold text-white transform -rotate-12 group-hover:rotate-0 transition-transform duration-300">
+                          {book.icon}
+                        </span>
+                      </div>
 
-                  <div className="absolute top-4 left-4">
-                    <span className="px-3 py-1.5 bg-background/90 backdrop-blur-sm text-foreground rounded-lg text-xs font-semibold">
-                      {book.category}
-                    </span>
-                  </div>
-                </div>
+                      <div className="absolute top-4 left-4">
+                        <span className="px-3 py-1.5 bg-background/90 backdrop-blur-sm text-foreground rounded-lg text-xs font-semibold">
+                          {book.category}
+                        </span>
+                      </div>
+                    </>
+                  )}
+                </button>
 
                 <div className="flex-1 p-6">
                   <div className="mb-4">
@@ -243,20 +248,42 @@ export default function Books() {
                   </div>
 
                   <div className="flex gap-3">
-                    <a
-                      href={book.downloadUrl}
-                      className="flex-1 inline-flex items-center justify-center gap-2 px-4 py-2 bg-primary text-primary-foreground rounded-lg text-sm font-medium hover:bg-primary/90 transition-colors"
-                    >
-                      <Download className="w-4 h-4" />
-                      Download
-                    </a>
-                    <a
-                      href={book.previewUrl}
-                      className="inline-flex items-center justify-center gap-2 px-4 py-2 border border-border rounded-lg text-sm font-medium hover:bg-muted transition-colors"
-                    >
-                      <ExternalLink className="w-4 h-4" />
-                      Preview
-                    </a>
+                    {book.pdfUrl ? (
+                      <>
+                        <button
+                          onClick={() => setReaderBook(book)}
+                          className="flex-1 inline-flex items-center justify-center gap-2 px-4 py-2 bg-primary text-primary-foreground rounded-lg text-sm font-medium hover:bg-primary/90 transition-colors"
+                        >
+                          <BookOpen className="w-4 h-4" />
+                          Preview
+                        </button>
+                        <a
+                          href={book.pdfUrl}
+                          download
+                          className="inline-flex items-center justify-center gap-2 px-4 py-2 border border-border rounded-lg text-sm font-medium hover:bg-muted transition-colors"
+                        >
+                          <Download className="w-4 h-4" />
+                          Download
+                        </a>
+                      </>
+                    ) : (
+                      <>
+                        <a
+                          href={book.downloadUrl}
+                          className="flex-1 inline-flex items-center justify-center gap-2 px-4 py-2 bg-primary text-primary-foreground rounded-lg text-sm font-medium hover:bg-primary/90 transition-colors"
+                        >
+                          <Download className="w-4 h-4" />
+                          Download
+                        </a>
+                        <a
+                          href={book.previewUrl}
+                          className="inline-flex items-center justify-center gap-2 px-4 py-2 border border-border rounded-lg text-sm font-medium hover:bg-muted transition-colors"
+                        >
+                          <ExternalLink className="w-4 h-4" />
+                          Preview
+                        </a>
+                      </>
+                    )}
                   </div>
                 </div>
               </div>
@@ -273,6 +300,27 @@ export default function Books() {
           </a>
         </div>
       </div>
+
+      {readerBook?.pdfUrl && (
+        <FlipBookReader
+          pdfUrl={readerBook.pdfUrl}
+          title={readerBook.title}
+          onClose={() => setReaderBook(null)}
+        />
+      )}
+
+      {coverPreviewBook && (
+        <BookCoverPreview
+          title={coverPreviewBook.title}
+          subtitle={coverPreviewBook.subtitle}
+          author={coverPreviewBook.author}
+          category={coverPreviewBook.category}
+          color={coverPreviewBook.color}
+          icon={coverPreviewBook.icon}
+          imageUrl={coverPreviewBook.imageUrl}
+          onClose={() => setCoverPreviewBook(null)}
+        />
+      )}
     </section>
   );
 }

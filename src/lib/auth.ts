@@ -54,19 +54,19 @@ export async function clearAdminSession() {
   cookieStore.delete(COOKIE_NAME);
 }
 
-export async function isAdminAuthenticated() {
+async function getVerifiedSessionEmail() {
   const cookieStore = await cookies();
   const session = cookieStore.get(COOKIE_NAME)?.value;
   const admin = getAdminCredentials();
 
   if (!session || !admin.email || !getSessionSecret()) {
-    return false;
+    return null;
   }
 
   const [payload, signature] = session.split(".");
 
   if (!payload || !signature) {
-    return false;
+    return null;
   }
 
   const expectedSignature = sign(payload);
@@ -77,13 +77,21 @@ export async function isAdminAuthenticated() {
     provided.length !== expected.length ||
     !timingSafeEqual(provided, expected)
   ) {
-    return false;
+    return null;
   }
 
   try {
     const parsed = JSON.parse(Buffer.from(payload, "base64url").toString());
-    return parsed.email === admin.email;
+    return parsed.email === admin.email ? (parsed.email as string) : null;
   } catch {
-    return false;
+    return null;
   }
+}
+
+export async function isAdminAuthenticated() {
+  return (await getVerifiedSessionEmail()) !== null;
+}
+
+export async function getAdminSessionEmail() {
+  return getVerifiedSessionEmail();
 }

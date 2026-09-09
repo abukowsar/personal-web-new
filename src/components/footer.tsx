@@ -17,10 +17,12 @@ import Image from "next/image";
 import Link from "next/link";
 import { useState } from "react";
 import logo from "@/assets/images/logo1.png";
+import ScheduleMeetingModal from "@/components/schedule-meeting-modal";
 
 export default function Footer() {
   const currentYear = new Date().getFullYear();
   const [isAvailable] = useState(true); // You can manage this state dynamically
+  const [showScheduleModal, setShowScheduleModal] = useState(false);
 
   const socialLinks = [
     {
@@ -202,13 +204,13 @@ export default function Footer() {
               </div>
 
               {/* CTA Button */}
-              <a
-                href="#contact"
+              <button
+                onClick={() => setShowScheduleModal(true)}
                 className="mt-4 w-full inline-flex items-center justify-center gap-2 px-4 py-2.5 bg-primary text-primary-foreground rounded-lg hover:bg-primary/90 transition-colors font-medium text-sm"
               >
                 <Calendar className="w-4 h-4" />
                 Schedule a Meeting
-              </a>
+              </button>
             </div>
           </div>
         </div>
@@ -231,22 +233,24 @@ export default function Footer() {
               All Rights Reserved.
             </p>
             <div className="flex gap-6">
-              <a
-                href="#"
+              <Link
+                href="/privacy-policy"
                 className="text-muted-foreground hover:text-primary transition-colors text-sm"
               >
                 Privacy Policy
-              </a>
-              <a
-                href="#"
+              </Link>
+              <Link
+                href="/terms-of-service"
                 className="text-muted-foreground hover:text-primary transition-colors text-sm"
               >
                 Terms of Service
-              </a>
+              </Link>
             </div>
           </div>
         </div>
       </div>
+
+      <ScheduleMeetingModal open={showScheduleModal} onClose={() => setShowScheduleModal(false)} />
     </>
   );
 }

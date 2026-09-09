@@ -2,7 +2,7 @@
 
 import Link from "next/link";
 import { useEffect, useState } from "react";
-import { Download, Award, Users, Calendar, CheckCircle, Star, Briefcase, X, Send } from "lucide-react";
+import { Download, Eye, Award, Users, Calendar, CheckCircle, Star, Briefcase, X, Send } from "lucide-react";
 import ownImage from "@/assets/images/about.png";
 import Image from "next/image";
 
@@ -12,6 +12,7 @@ export default function Hero() {
   const [currentTitle, setCurrentTitle] = useState(0);
   const [isVisible, setIsVisible] = useState(false);
   const [showConsultationModal, setShowConsultationModal] = useState(false);
+  const [showResumePopup, setShowResumePopup] = useState(false);
   const [formData, setFormData] = useState({
     name: "",
     email: "",
@@ -39,6 +40,17 @@ export default function Hero() {
     return () => clearInterval(titleInterval);
   }, []);
 
+  useEffect(() => {
+    if (!showResumePopup) return;
+
+    const handleEscape = (event: KeyboardEvent) => {
+      if (event.key === "Escape") setShowResumePopup(false);
+    };
+
+    document.addEventListener("keydown", handleEscape);
+    return () => document.removeEventListener("keydown", handleEscape);
+  }, [showResumePopup]);
+
   const handleDownloadResume = () => {
     const link = document.createElement("a");
     link.href = "/resume.pdf";
@@ -46,6 +58,10 @@ export default function Hero() {
     document.body.appendChild(link);
     link.click();
     document.body.removeChild(link);
+  };
+
+  const handleViewResume = () => {
+    setShowResumePopup(true);
   };
 
   const handleBookmark = () => {
@@ -57,7 +73,7 @@ export default function Hero() {
     setIsSubmitting(true);
 
     try {
-      const response = await fetch("/api/send-email", {
+      const response = await fetch("/api/consultations", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -65,17 +81,10 @@ export default function Hero() {
         body: JSON.stringify({
           name: formData.name,
           email: formData.email,
-          subject: `Consultation Request - ${formData.service}`,
-          message: `
-Name: ${formData.name}
-Email: ${formData.email}
-Phone: ${formData.phone}
-Company: ${formData.company}
-Service: ${formData.service}
-
-Message:
-${formData.message}
-          `,
+          phone: formData.phone,
+          company: formData.company,
+          service: formData.service,
+          message: formData.message,
         }),
       });
 
@@ -339,14 +348,21 @@ ${formData.message}
                 <span className="text-sm text-green-600 dark:text-green-400">Part-time / Consulting</span>
               </div>
 
-{/* Download Resume Button */}
-<div className="mb-8 flex justify-center">
+{/* Resume actions */}
+<div className="mb-8 flex flex-wrap justify-center gap-3">
+        <button
+            onClick={handleViewResume}
+              className="flex items-center justify-center gap-2 px-4 py-2 bg-accent text-accent-foreground rounded-lg font-semibold hover:opacity-90 transition-opacity shadow-lg text-sm cursor-pointer min-w-[160px]"
+            >
+              <Eye size={18} />
+              View Resume
+            </button>
         <button
               onClick={handleDownloadResume}
-              className="flex items-center gap-2 px-4 py-2 bg-accent text-accent-foreground rounded-lg font-semibold hover:opacity-90 transition-opacity shadow-lg text-sm cursor-pointer w-[200px] md:w-auto"
+              className="flex items-center justify-center gap-2 px-4 py-2 border border-accent text-accent rounded-lg font-semibold hover:bg-accent/10 transition-colors text-sm cursor-pointer min-w-[160px]"
             >
               <Download size={18} />
-              Download Resume (PDF)
+              Download PDF
             </button>
            </div>
                 {/* Social Links - Single Row */}
@@ -377,6 +393,49 @@ ${formData.message}
               </a>
             </div>
           </div>
+          {showResumePopup && (
+            <div
+              className="fixed inset-0 z-50 bg-black/80"
+              role="presentation"
+              onMouseDown={(event) => {
+                if (event.target === event.currentTarget) setShowResumePopup(false);
+              }}
+            >
+              <div
+                className="relative flex h-full w-full flex-col bg-background"
+                role="dialog"
+                aria-modal="true"
+                aria-labelledby="resume-popup-title"
+              >
+                <div className="flex h-14 shrink-0 items-center justify-between border-b border-border bg-background px-4">
+                  <h2 id="resume-popup-title" className="text-base font-semibold text-foreground">
+                    Resume
+                  </h2>
+                  <div className="flex items-center gap-2">
+                    <button
+                      onClick={handleDownloadResume}
+                      className="inline-flex items-center gap-2 rounded-md border border-border px-3 py-2 text-sm font-medium text-foreground hover:bg-muted"
+                    >
+                      <Download size={16} />
+                      Download
+                    </button>
+                    <button
+                      onClick={() => setShowResumePopup(false)}
+                      aria-label="Close resume popup"
+                      className="rounded-md p-2 text-muted-foreground hover:bg-muted hover:text-foreground"
+                    >
+                      <X size={22} />
+                    </button>
+                  </div>
+                </div>
+                <iframe
+                  src="/resume.pdf#view=FitH"
+                  title="Resume preview"
+                  className="min-h-0 flex-1 bg-white"
+                />
+              </div>
+            </div>
+          )}
         </div>
       </div>
     </div>

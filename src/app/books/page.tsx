@@ -1,18 +1,11 @@
 "use client";
 import { useState } from "react";
-import Image from "next/image";
 import Link from "next/link";
 import { ArrowLeft, Star, BookOpen, Download, ExternalLink, ShoppingCart } from "lucide-react";
 import Header from "@/components/header";
 import Footer from "@/components/footer";
-
-// Import book cover images
-import book1 from "@/assets/images/blog/book/book1.png";
-import book2 from "@/assets/images/blog/book/book2.png";
-import book3 from "@/assets/images/blog/book/book3.png";
-import book4 from "@/assets/images/blog/book/book4.png";
-import book5 from "@/assets/images/blog/book/book1.png";
-import book6 from "@/assets/images/blog/book/book2.png";
+import BookCoverArt from "@/components/book-cover-art";
+import BookCoverPreview from "@/components/book-cover-preview";
 
 export default function Books() {
   const allBooks = [
@@ -29,7 +22,6 @@ export default function Books() {
       language: "English",
       publishYear: "2024",
       price: "$29.99",
-      image: book1,
       color: "bg-blue-500",
       icon: "📊",
       downloadUrl: "#",
@@ -49,7 +41,6 @@ export default function Books() {
       language: "English",
       publishYear: "2024",
       price: "$34.99",
-      image: book2,
       color: "bg-purple-500",
       icon: "🤖",
       downloadUrl: "#",
@@ -69,7 +60,6 @@ export default function Books() {
       language: "English",
       publishYear: "2023",
       price: "$27.99",
-      image: book3,
       color: "bg-green-500",
       icon: "🎯",
       downloadUrl: "#",
@@ -89,7 +79,6 @@ export default function Books() {
       language: "English",
       publishYear: "2023",
       price: "$31.99",
-      image: book4,
       color: "bg-orange-500",
       icon: "🚀",
       downloadUrl: "#",
@@ -109,7 +98,6 @@ export default function Books() {
       language: "English",
       publishYear: "2023",
       price: "$28.99",
-      image: book5,
       color: "bg-red-500",
       icon: "🔐",
       downloadUrl: "#",
@@ -129,7 +117,6 @@ export default function Books() {
       language: "English",
       publishYear: "2022",
       price: "$26.99",
-      image: book6,
       color: "bg-indigo-500",
       icon: "💡",
       downloadUrl: "#",
@@ -140,6 +127,7 @@ export default function Books() {
 
   const categories = ["All", "Project Management", "Technology", "Leadership", "Digital Strategy", "Security", "Innovation"];
   const [selectedCategory, setSelectedCategory] = useState("All");
+  const [coverPreviewBook, setCoverPreviewBook] = useState<(typeof allBooks)[number] | null>(null);
 
   const filteredBooks = selectedCategory === "All" 
     ? allBooks 
@@ -213,30 +201,21 @@ export default function Books() {
                   
                   <div className="flex flex-col md:flex-row">
                     {/* Book Cover */}
-                    <div className="relative md:w-48 h-64 md:h-auto bg-gradient-to-br from-secondary to-muted overflow-hidden">
-                      <Image
-                        src={book.image}
-                        alt={book.title}
-                        fill
-                        className="object-cover group-hover:scale-110 transition-transform duration-500"
+                    <button
+                      type="button"
+                      onClick={() => setCoverPreviewBook(book)}
+                      aria-label={`Preview cover of ${book.title}`}
+                      className="relative block w-full md:w-48 h-64 md:h-auto appearance-none border-0 bg-gradient-to-br from-secondary to-muted p-0 text-left overflow-hidden cursor-zoom-in"
+                    >
+                      <BookCoverArt
+                        title={book.title}
+                        subtitle={book.subtitle}
+                        author={book.author}
+                        category={book.category}
+                        color={book.color}
+                        icon={book.icon}
                       />
-                      
-                      {/* Icon Badge */}
-                      <div
-                        className={`absolute -bottom-4 -right-4 w-16 h-16 ${book.color} rounded-xl flex items-center justify-center transform rotate-12 group-hover:rotate-0 transition-transform duration-300`}
-                      >
-                        <span className="text-2xl transform -rotate-12 group-hover:rotate-0 transition-transform duration-300">
-                          {book.icon}
-                        </span>
-                      </div>
-
-                      {/* Category Badge */}
-                      <div className="absolute top-4 left-4">
-                        <span className="px-3 py-1.5 bg-background/90 backdrop-blur-sm text-foreground rounded-lg text-xs font-semibold">
-                          {book.category}
-                        </span>
-                      </div>
-                    </div>
+                    </button>
 
                     {/* Book Details */}
                     <div className="flex-1 p-6">
@@ -338,6 +317,18 @@ export default function Books() {
       </div>
       
       <Footer />
+
+      {coverPreviewBook && (
+        <BookCoverPreview
+          title={coverPreviewBook.title}
+          subtitle={coverPreviewBook.subtitle}
+          author={coverPreviewBook.author}
+          category={coverPreviewBook.category}
+          color={coverPreviewBook.color}
+          icon={coverPreviewBook.icon}
+          onClose={() => setCoverPreviewBook(null)}
+        />
+      )}
     </>
   );
 }
