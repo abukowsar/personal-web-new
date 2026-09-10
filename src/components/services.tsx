@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from "react";
+import { ArrowRight } from "lucide-react";
 import ConsultationModal from "@/components/consultation-modal";
 
 export default function Services() {
@@ -71,17 +72,26 @@ export default function Services() {
 
       <div className="max-w-7xl mx-auto relative z-10">
         {/* Header */}
-        <div className="text-center mb-20">
-          <span className="inline-block px-4 py-2 rounded-full bg-primary/10 text-primary text-sm font-medium mb-6">
-            What I Offer
-          </span>
-          <h2 className="text-4xl md:text-5xl lg:text-6xl font-bold text-foreground mb-6 tracking-tight">
-            Affordable Services
-          </h2>
-          <p className="text-lg text-muted-foreground max-w-2xl mx-auto leading-relaxed">
-            Tailored solutions to help your business grow, innovate, and succeed
-            in today's competitive landscape.
-          </p>
+        <div className="flex flex-col sm:flex-row sm:items-end sm:justify-between gap-6 mb-16">
+          <div>
+            <span className="inline-block px-4 py-2 rounded-full bg-primary/10 text-primary text-sm font-medium mb-6">
+              What I Offer
+            </span>
+            <h2 className="text-4xl md:text-5xl lg:text-6xl font-bold text-foreground mb-6 tracking-tight">
+              Affordable Services
+            </h2>
+            <p className="text-lg text-muted-foreground max-w-2xl leading-relaxed">
+              Tailored solutions to help your business grow, innovate, and succeed
+              in today's competitive landscape.
+            </p>
+          </div>
+          <button
+            onClick={() => setShowConsultationModal(true)}
+            className="shrink-0 inline-flex items-center gap-1.5 text-sm font-semibold text-primary hover:gap-2.5 transition-all"
+          >
+            All Services
+            <ArrowRight className="w-4 h-4" />
+          </button>
         </div>
 
         {/* Services Grid */}

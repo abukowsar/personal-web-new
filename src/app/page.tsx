@@ -14,6 +14,7 @@ import Footer from "@/components/footer";
 import Awards from "@/components/award";
 import Books from "@/components/books";
 import Models from "@/components/models";
+import ScrollReveal from "@/components/scroll-reveal";
 
 
 
@@ -38,15 +39,33 @@ export default function Home() {
       <Banner />
       <Header />
       <Hero />
-      <Services />
-      <Projects />
-      <Blog />
-      <Books />
-      <Models />
-      <Awards />
-      <Testimonials />
-      <About />
-      <Contact />
+      <ScrollReveal>
+        <Services />
+      </ScrollReveal>
+      <ScrollReveal>
+        <Projects />
+      </ScrollReveal>
+      <ScrollReveal>
+        <Blog />
+      </ScrollReveal>
+      <ScrollReveal>
+        <Books />
+      </ScrollReveal>
+      <ScrollReveal>
+        <Models />
+      </ScrollReveal>
+      <ScrollReveal>
+        <Awards />
+      </ScrollReveal>
+      <ScrollReveal>
+        <Testimonials />
+      </ScrollReveal>
+      <ScrollReveal>
+        <About />
+      </ScrollReveal>
+      <ScrollReveal>
+        <Contact />
+      </ScrollReveal>
       <Footer />
 
       {/* Back to Top Button */}
