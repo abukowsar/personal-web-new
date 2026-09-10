@@ -13,6 +13,7 @@ import Contact from "@/components/contact";
 import Footer from "@/components/footer";
 import Awards from "@/components/award";
 import Books from "@/components/books";
+import Models from "@/components/models";
 
 
 
@@ -39,9 +40,10 @@ export default function Home() {
       <Hero />
       <Services />
       <Projects />
-      <Awards />
       <Blog />
       <Books />
+      <Models />
+      <Awards />
       <Testimonials />
       <About />
       <Contact />

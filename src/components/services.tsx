@@ -1,4 +1,11 @@
+"use client";
+
+import { useState } from "react";
+import ConsultationModal from "@/components/consultation-modal";
+
 export default function Services() {
+  const [showConsultationModal, setShowConsultationModal] = useState(false);
+
   const services = [
     {
       icon: "🧑‍💼",
@@ -51,6 +58,7 @@ export default function Services() {
   ];
 
   return (
+    <>
     <section
       id="services"
       className="py-24 px-4 bg-background transition-colors duration-300 relative overflow-hidden"
@@ -139,12 +147,12 @@ export default function Services() {
         {/* CTA Section */}
         <div className="mt-20 text-center">
           <div className="inline-flex flex-col sm:flex-row gap-4 items-center">
-            <a
-              href="#contact"
+            <button
+              onClick={() => setShowConsultationModal(true)}
               className="px-8 py-4 bg-primary text-primary-foreground rounded-full font-semibold hover:opacity-90 transition-all duration-300 hover:shadow-lg hover:shadow-primary/25 hover:-translate-y-1"
             >
               Get Started Today
-            </a>
+            </button>
             <a
               href="#portfolio"
               className="px-8 py-4 bg-secondary text-secondary-foreground rounded-full font-semibold hover:bg-secondary/80 transition-all duration-300"
@@ -155,5 +163,10 @@ export default function Services() {
         </div>
       </div>
     </section>
+    <ConsultationModal
+      open={showConsultationModal}
+      onClose={() => setShowConsultationModal(false)}
+    />
+    </>
   );
 }

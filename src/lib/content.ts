@@ -55,6 +55,22 @@ export const contentConfig = {
       featured: true,
     },
   },
+  models: {
+    collection: "ai_models",
+    required: ["title", "description"],
+    defaults: {
+      category: "AI/ML",
+      architecture: "",
+      trainingData: "",
+      performance: "",
+      useCase: "",
+      tags: [],
+      imageUrl: "",
+      liveUrl: "#",
+      githubUrl: "#",
+      featured: true,
+    },
+  },
 } as const;
 
 export type ContentType = keyof typeof contentConfig;

@@ -6,6 +6,7 @@ import { useRouter } from "next/navigation";
 import {
   AlertTriangle,
   BookOpen,
+  BrainCircuit,
   CheckCircle2,
   Database,
   FolderKanban,
@@ -37,6 +38,13 @@ const dashboardCards = [
     type: "books",
     icon: BookOpen,
     description: "Manage publications, book metadata, and links.",
+  },
+  {
+    label: "Models",
+    href: "/admin/models",
+    type: "models",
+    icon: BrainCircuit,
+    description: "Manage AI/ML models shown in the homepage Models section.",
   },
 ];
 

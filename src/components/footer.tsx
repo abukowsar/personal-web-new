@@ -6,12 +6,15 @@ import {
   Linkedin,
   Youtube,
   ArrowRight,
+  Award,
   Mail,
+  MessageSquareQuote,
   Phone,
   MapPin,
   Clock,
   Calendar,
   CheckCircle,
+  UserCircle,
 } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
@@ -49,10 +52,10 @@ export default function Footer() {
   ];
 
   const menuLinks = [
-    { label: "Home", url: "#home" },
-    { label: "Services", url: "#services" },
-    { label: "Contact", url: "#contact" },
-    { label: "About", url: "#about" },
+    { label: "Awards", url: "#awards", icon: Award },
+    { label: "Testimonials", url: "#testimonials", icon: MessageSquareQuote },
+    { label: "About", url: "#about", icon: UserCircle },
+    { label: "Contact", url: "#contact", icon: Mail },
   ];
 
   const contactInfo = [
@@ -124,17 +127,24 @@ export default function Footer() {
             <div className="lg:col-span-1">
               <h5 className="font-semibold text-foreground mb-4">Menu</h5>
               <ul className="space-y-3">
-                {menuLinks.map((link) => (
-                  <li key={link.label}>
-                    <a
-                      href={link.url}
-                      className="text-muted-foreground hover:text-primary transition-colors flex items-center group"
-                    >
-                      <ArrowRight className="w-4 h-4 mr-2 opacity-0 -ml-6 group-hover:opacity-100 group-hover:ml-0 transition-all" />
-                      {link.label}
-                    </a>
-                  </li>
-                ))}
+                {menuLinks.map((link) => {
+                  const Icon = link.icon;
+
+                  return (
+                    <li key={link.label}>
+                      <a
+                        href={link.url}
+                        className="text-muted-foreground hover:text-primary transition-colors flex items-center justify-between group"
+                      >
+                        <span className="flex items-center gap-2.5">
+                          <Icon className="w-4 h-4 text-primary/60 group-hover:text-primary transition-colors" />
+                          {link.label}
+                        </span>
+                        <ArrowRight className="w-4 h-4 opacity-0 -translate-x-1 group-hover:opacity-100 group-hover:translate-x-0 transition-all" />
+                      </a>
+                    </li>
+                  );
+                })}
               </ul>
             </div>
 

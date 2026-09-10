@@ -5,6 +5,7 @@ import { useRouter, useSearchParams } from "next/navigation";
 import {
   AlertCircle,
   BookOpen,
+  BrainCircuit,
   CheckCircle2,
   FolderKanban,
   ImageIcon,
@@ -20,7 +21,7 @@ import BookCoverArt from "@/components/book-cover-art";
 const COVER_ART_WIDTH = 192;
 const COVER_ART_HEIGHT = 256;
 
-export type Section = "projects" | "blog" | "books";
+export type Section = "projects" | "blog" | "books" | "models";
 
 type Item = {
   id: string;
@@ -50,6 +51,10 @@ type Item = {
   downloadUrl?: string;
   previewUrl?: string;
   pdfUrl?: string;
+  architecture?: string;
+  trainingData?: string;
+  performance?: string;
+  useCase?: string;
 };
 
 type AssetImage = {
@@ -82,6 +87,12 @@ const sectionConfig = {
     singular: "Book",
     icon: BookOpen,
     description: "Add and manage publication cards shown in the books section.",
+  },
+  models: {
+    label: "Models",
+    singular: "Model",
+    icon: BrainCircuit,
+    description: "Add and manage AI/ML models shown in the homepage Models section.",
   },
 };
 
@@ -131,6 +142,20 @@ const emptyForms = {
     downloadUrl: "#",
     previewUrl: "#",
     pdfUrl: "",
+    featured: true,
+  },
+  models: {
+    title: "",
+    description: "",
+    category: "AI/ML",
+    architecture: "",
+    trainingData: "",
+    performance: "",
+    useCase: "",
+    tags: "",
+    imageUrl: "",
+    liveUrl: "#",
+    githubUrl: "#",
     featured: true,
   },
 };
@@ -478,7 +503,9 @@ export default function ContentManager({ section }: { section: Section }) {
                           ? item.publishYear
                           : section === "projects"
                             ? item.year || item.status
-                            : item.status || item.author || "Published"}
+                            : section === "models"
+                              ? item.architecture || "—"
+                              : item.status || item.author || "Published"}
                       </td>
                       <td className="max-w-[260px] truncate px-4 py-3 text-muted-foreground">
                         {item.excerpt || item.description || item.tags?.join(", ")}
@@ -588,24 +615,41 @@ function mapItemToForm(section: Section, item: Item) {
     };
   }
 
+  if (section === "books") {
+    return {
+      title: item.title || "",
+      subtitle: item.subtitle || "",
+      author: item.author || "Abu Kowsar",
+      description: item.description || "",
+      category: item.category || "General",
+      rating: String(item.rating || "4.8"),
+      reviews: String(item.reviews || "0"),
+      pages: String(item.pages || "0"),
+      language: item.language || "English",
+      publishYear: item.publishYear || String(new Date().getFullYear()),
+      price: item.price || "$0.00",
+      imageUrl: item.imageUrl || "",
+      color: item.color || "bg-blue-500",
+      icon: item.icon || "Book",
+      downloadUrl: item.downloadUrl || "#",
+      previewUrl: item.previewUrl || "#",
+      pdfUrl: item.pdfUrl || "",
+      featured: Boolean(item.featured),
+    };
+  }
+
   return {
     title: item.title || "",
-    subtitle: item.subtitle || "",
-    author: item.author || "Abu Kowsar",
     description: item.description || "",
-    category: item.category || "General",
-    rating: String(item.rating || "4.8"),
-    reviews: String(item.reviews || "0"),
-    pages: String(item.pages || "0"),
-    language: item.language || "English",
-    publishYear: item.publishYear || String(new Date().getFullYear()),
-    price: item.price || "$0.00",
+    category: item.category || "AI/ML",
+    architecture: item.architecture || "",
+    trainingData: item.trainingData || "",
+    performance: item.performance || "",
+    useCase: item.useCase || "",
+    tags: item.tags?.join(", ") || "",
     imageUrl: item.imageUrl || "",
-    color: item.color || "bg-blue-500",
-    icon: item.icon || "Book",
-    downloadUrl: item.downloadUrl || "#",
-    previewUrl: item.previewUrl || "#",
-    pdfUrl: item.pdfUrl || "",
+    liveUrl: item.liveUrl || "#",
+    githubUrl: item.githubUrl || "#",
     featured: Boolean(item.featured),
   };
 }
@@ -658,27 +702,46 @@ function FormFields({
     );
   }
 
+  if (active === "books") {
+    return (
+      <div className="space-y-4">
+        <Field label="Title" value={String(form.title)} onChange={(value) => updateForm("title", value)} required />
+        <Field label="Subtitle" value={String(form.subtitle)} onChange={(value) => updateForm("subtitle", value)} />
+        <Field label="Author" value={String(form.author)} onChange={(value) => updateForm("author", value)} />
+        <Textarea label="Description" value={String(form.description)} onChange={(value) => updateForm("description", value)} required />
+        <Field label="Category" value={String(form.category)} onChange={(value) => updateForm("category", value)} />
+        <div className="grid grid-cols-3 gap-3">
+          <Field label="Rating" value={String(form.rating)} onChange={(value) => updateForm("rating", value)} />
+          <Field label="Reviews" value={String(form.reviews)} onChange={(value) => updateForm("reviews", value)} />
+          <Field label="Pages" value={String(form.pages)} onChange={(value) => updateForm("pages", value)} />
+        </div>
+        <div className="grid grid-cols-2 gap-3">
+          <Field label="Language" value={String(form.language)} onChange={(value) => updateForm("language", value)} />
+          <Field label="Year" value={String(form.publishYear)} onChange={(value) => updateForm("publishYear", value)} />
+        </div>
+        <Field label="Price" value={String(form.price)} onChange={(value) => updateForm("price", value)} />
+        <ImageField value={String(form.imageUrl)} onChange={(value) => updateForm("imageUrl", value)} />
+        <PdfField value={String(form.pdfUrl)} onChange={(value) => updateForm("pdfUrl", value)} />
+        <Field label="Download URL" value={String(form.downloadUrl)} onChange={(value) => updateForm("downloadUrl", value)} />
+        <Field label="Preview URL" value={String(form.previewUrl)} onChange={(value) => updateForm("previewUrl", value)} />
+        <Featured checked={Boolean(form.featured)} onChange={(value) => updateForm("featured", value)} />
+      </div>
+    );
+  }
+
   return (
     <div className="space-y-4">
       <Field label="Title" value={String(form.title)} onChange={(value) => updateForm("title", value)} required />
-      <Field label="Subtitle" value={String(form.subtitle)} onChange={(value) => updateForm("subtitle", value)} />
-      <Field label="Author" value={String(form.author)} onChange={(value) => updateForm("author", value)} />
       <Textarea label="Description" value={String(form.description)} onChange={(value) => updateForm("description", value)} required />
       <Field label="Category" value={String(form.category)} onChange={(value) => updateForm("category", value)} />
-      <div className="grid grid-cols-3 gap-3">
-        <Field label="Rating" value={String(form.rating)} onChange={(value) => updateForm("rating", value)} />
-        <Field label="Reviews" value={String(form.reviews)} onChange={(value) => updateForm("reviews", value)} />
-        <Field label="Pages" value={String(form.pages)} onChange={(value) => updateForm("pages", value)} />
-      </div>
-      <div className="grid grid-cols-2 gap-3">
-        <Field label="Language" value={String(form.language)} onChange={(value) => updateForm("language", value)} />
-        <Field label="Year" value={String(form.publishYear)} onChange={(value) => updateForm("publishYear", value)} />
-      </div>
-      <Field label="Price" value={String(form.price)} onChange={(value) => updateForm("price", value)} />
+      <Field label="Architecture" value={String(form.architecture)} onChange={(value) => updateForm("architecture", value)} placeholder="e.g. Transformer, fine-tuned LLaMA-3 8B" />
+      <Field label="Training Data" value={String(form.trainingData)} onChange={(value) => updateForm("trainingData", value)} placeholder="e.g. 50M Bengali news & social posts" />
+      <Field label="Performance" value={String(form.performance)} onChange={(value) => updateForm("performance", value)} placeholder="e.g. 94% F1 on fact-verification benchmark" />
+      <Field label="Use Case" value={String(form.useCase)} onChange={(value) => updateForm("useCase", value)} placeholder="e.g. Real-time Bengali fact-checking" />
+      <Field label="Tags" value={String(form.tags)} onChange={(value) => updateForm("tags", value)} placeholder="NLP, PyTorch, Bengali" />
       <ImageField value={String(form.imageUrl)} onChange={(value) => updateForm("imageUrl", value)} />
-      <PdfField value={String(form.pdfUrl)} onChange={(value) => updateForm("pdfUrl", value)} />
-      <Field label="Download URL" value={String(form.downloadUrl)} onChange={(value) => updateForm("downloadUrl", value)} />
-      <Field label="Preview URL" value={String(form.previewUrl)} onChange={(value) => updateForm("previewUrl", value)} />
+      <Field label="Live/Demo URL" value={String(form.liveUrl)} onChange={(value) => updateForm("liveUrl", value)} />
+      <Field label="GitHub URL" value={String(form.githubUrl)} onChange={(value) => updateForm("githubUrl", value)} />
       <Featured checked={Boolean(form.featured)} onChange={(value) => updateForm("featured", value)} />
     </div>
   );

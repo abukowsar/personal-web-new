@@ -1,5 +1,5 @@
 "use client";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import {
   Trophy,
   GraduationCap,
@@ -11,33 +11,12 @@ import {
   Check,
   User,
   Building2,
-  Download,
-  X,
 } from "lucide-react";
+import ResumeViewerModal from "@/components/resume-viewer-modal";
 
 export default function Awards() {
   const [activeTab, setActiveTab] = useState("individual");
   const [showResumePopup, setShowResumePopup] = useState(false);
-
-  useEffect(() => {
-    if (!showResumePopup) return;
-
-    const handleEscape = (event: KeyboardEvent) => {
-      if (event.key === "Escape") setShowResumePopup(false);
-    };
-
-    document.addEventListener("keydown", handleEscape);
-    return () => document.removeEventListener("keydown", handleEscape);
-  }, [showResumePopup]);
-
-  const handleDownloadResume = () => {
-    const link = document.createElement("a");
-    link.href = "/resume.pdf";
-    link.download = "resume.pdf";
-    document.body.appendChild(link);
-    link.click();
-    document.body.removeChild(link);
-  };
 
   const tabs = [
     {
@@ -259,49 +238,10 @@ export default function Awards() {
         </div>
       </div>
 
-      {showResumePopup && (
-        <div
-          className="fixed inset-0 z-50 bg-black/80"
-          role="presentation"
-          onMouseDown={(event) => {
-            if (event.target === event.currentTarget) setShowResumePopup(false);
-          }}
-        >
-          <div
-            className="relative flex h-full w-full flex-col bg-background"
-            role="dialog"
-            aria-modal="true"
-            aria-labelledby="cv-popup-title"
-          >
-            <div className="flex h-14 shrink-0 items-center justify-between border-b border-border bg-background px-4">
-              <h2 id="cv-popup-title" className="text-base font-semibold text-foreground">
-                Resume
-              </h2>
-              <div className="flex items-center gap-2">
-                <button
-                  onClick={handleDownloadResume}
-                  className="inline-flex items-center gap-2 rounded-md border border-border px-3 py-2 text-sm font-medium text-foreground hover:bg-muted"
-                >
-                  <Download size={16} />
-                  Download
-                </button>
-                <button
-                  onClick={() => setShowResumePopup(false)}
-                  aria-label="Close resume popup"
-                  className="rounded-md p-2 text-muted-foreground hover:bg-muted hover:text-foreground"
-                >
-                  <X size={22} />
-                </button>
-              </div>
-            </div>
-            <iframe
-              src="/resume.pdf#view=FitH"
-              title="Resume preview"
-              className="min-h-0 flex-1 bg-white"
-            />
-          </div>
-        </div>
-      )}
+      <ResumeViewerModal
+        open={showResumePopup}
+        onClose={() => setShowResumePopup(false)}
+      />
     </section>
   );
 }

@@ -2,9 +2,11 @@
 
 import Link from "next/link";
 import { useEffect, useState } from "react";
-import { Download, Eye, Award, Users, Calendar, CheckCircle, Star, Briefcase, X, Send } from "lucide-react";
+import { Download, Eye, Award, Users, Calendar, CheckCircle, Star, Briefcase } from "lucide-react";
 import ownImage from "@/assets/images/about.png";
 import Image from "next/image";
+import ConsultationModal from "@/components/consultation-modal";
+import ResumeViewerModal from "@/components/resume-viewer-modal";
 
 export default function Hero() {
   const [mounted, setMounted] = useState(false);
@@ -13,15 +15,6 @@ export default function Hero() {
   const [isVisible, setIsVisible] = useState(false);
   const [showConsultationModal, setShowConsultationModal] = useState(false);
   const [showResumePopup, setShowResumePopup] = useState(false);
-  const [formData, setFormData] = useState({
-    name: "",
-    email: "",
-    phone: "",
-    company: "",
-    service: "",
-    message: ""
-  });
-  const [isSubmitting, setIsSubmitting] = useState(false);
 
   const titles = [
     "Technical Project Manager",
@@ -40,17 +33,6 @@ export default function Hero() {
     return () => clearInterval(titleInterval);
   }, []);
 
-  useEffect(() => {
-    if (!showResumePopup) return;
-
-    const handleEscape = (event: KeyboardEvent) => {
-      if (event.key === "Escape") setShowResumePopup(false);
-    };
-
-    document.addEventListener("keydown", handleEscape);
-    return () => document.removeEventListener("keydown", handleEscape);
-  }, [showResumePopup]);
-
   const handleDownloadResume = () => {
     const link = document.createElement("a");
     link.href = "/resume.pdf";
@@ -66,54 +48,6 @@ export default function Hero() {
 
   const handleBookmark = () => {
     setIsBookmarked(!isBookmarked);
-  };
-
-  const handleConsultationSubmit = async (e: React.FormEvent) => {
-    e.preventDefault();
-    setIsSubmitting(true);
-
-    try {
-      const response = await fetch("/api/consultations", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({
-          name: formData.name,
-          email: formData.email,
-          phone: formData.phone,
-          company: formData.company,
-          service: formData.service,
-          message: formData.message,
-        }),
-      });
-
-      if (response.ok) {
-        alert("Consultation request sent successfully!");
-        setShowConsultationModal(false);
-        setFormData({
-          name: "",
-          email: "",
-          phone: "",
-          company: "",
-          service: "",
-          message: ""
-        });
-      } else {
-        alert("Failed to send consultation request. Please try again.");
-      }
-    } catch (error) {
-      alert("An error occurred. Please try again.");
-    } finally {
-      setIsSubmitting(false);
-    }
-  };
-
-  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) => {
-    setFormData({
-      ...formData,
-      [e.target.name]: e.target.value
-    });
   };
 
   return (
@@ -393,49 +327,6 @@ export default function Hero() {
               </a>
             </div>
           </div>
-          {showResumePopup && (
-            <div
-              className="fixed inset-0 z-50 bg-black/80"
-              role="presentation"
-              onMouseDown={(event) => {
-                if (event.target === event.currentTarget) setShowResumePopup(false);
-              }}
-            >
-              <div
-                className="relative flex h-full w-full flex-col bg-background"
-                role="dialog"
-                aria-modal="true"
-                aria-labelledby="resume-popup-title"
-              >
-                <div className="flex h-14 shrink-0 items-center justify-between border-b border-border bg-background px-4">
-                  <h2 id="resume-popup-title" className="text-base font-semibold text-foreground">
-                    Resume
-                  </h2>
-                  <div className="flex items-center gap-2">
-                    <button
-                      onClick={handleDownloadResume}
-                      className="inline-flex items-center gap-2 rounded-md border border-border px-3 py-2 text-sm font-medium text-foreground hover:bg-muted"
-                    >
-                      <Download size={16} />
-                      Download
-                    </button>
-                    <button
-                      onClick={() => setShowResumePopup(false)}
-                      aria-label="Close resume popup"
-                      className="rounded-md p-2 text-muted-foreground hover:bg-muted hover:text-foreground"
-                    >
-                      <X size={22} />
-                    </button>
-                  </div>
-                </div>
-                <iframe
-                  src="/resume.pdf#view=FitH"
-                  title="Resume preview"
-                  className="min-h-0 flex-1 bg-white"
-                />
-              </div>
-            </div>
-          )}
         </div>
       </div>
     </div>
@@ -497,144 +388,14 @@ export default function Hero() {
         }
       `}</style>
 
-      {/* Consultation Modal */}
-      {showConsultationModal && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/50 backdrop-blur-sm">
-          <div className="bg-background border border-border rounded-xl shadow-xl max-w-md w-full max-h-[90vh] overflow-y-auto">
-            <div className="p-6">
-              <div className="flex items-center justify-between mb-6">
-                <h3 className="text-xl font-bold text-foreground">Book a Consultation</h3>
-                <button
-                  onClick={() => setShowConsultationModal(false)}
-                  className="p-2 hover:bg-muted rounded-lg transition-colors"
-                >
-                  <X className="w-5 h-5" />
-                </button>
-              </div>
-
-              <form onSubmit={handleConsultationSubmit} className="space-y-4">
-                <div>
-                  <label className="block text-sm font-medium text-foreground mb-2">
-                    Full Name *
-                  </label>
-                  <input
-                    type="text"
-                    name="name"
-                    value={formData.name}
-                    onChange={handleInputChange}
-                    required
-                    className="w-full px-3 py-2 border border-border rounded-lg bg-background text-foreground focus:outline-none focus:ring-2 focus:ring-primary"
-                    placeholder="Your full name"
-                  />
-                </div>
-
-                <div>
-                  <label className="block text-sm font-medium text-foreground mb-2">
-                    Email Address *
-                  </label>
-                  <input
-                    type="email"
-                    name="email"
-                    value={formData.email}
-                    onChange={handleInputChange}
-                    required
-                    className="w-full px-3 py-2 border border-border rounded-lg bg-background text-foreground focus:outline-none focus:ring-2 focus:ring-primary"
-                    placeholder="your.email@example.com"
-                  />
-                </div>
-
-                <div>
-                  <label className="block text-sm font-medium text-foreground mb-2">
-                    Phone Number
-                  </label>
-                  <input
-                    type="tel"
-                    name="phone"
-                    value={formData.phone}
-                    onChange={handleInputChange}
-                    className="w-full px-3 py-2 border border-border rounded-lg bg-background text-foreground focus:outline-none focus:ring-2 focus:ring-primary"
-                    placeholder="+1 (555) 123-4567"
-                  />
-                </div>
-
-                <div>
-                  <label className="block text-sm font-medium text-foreground mb-2">
-                    Company/Organization
-                  </label>
-                  <input
-                    type="text"
-                    name="company"
-                    value={formData.company}
-                    onChange={handleInputChange}
-                    className="w-full px-3 py-2 border border-border rounded-lg bg-background text-foreground focus:outline-none focus:ring-2 focus:ring-primary"
-                    placeholder="Your company name"
-                  />
-                </div>
-
-                <div>
-                  <label className="block text-sm font-medium text-foreground mb-2">
-                    Service Interested In *
-                  </label>
-                  <select
-                    name="service"
-                    value={formData.service}
-                    onChange={handleInputChange}
-                    required
-                    className="w-full px-3 py-2 border border-border rounded-lg bg-background text-foreground focus:outline-none focus:ring-2 focus:ring-primary"
-                  >
-                    <option value="">Select a service</option>
-                    <option value="AI Integration">AI Integration</option>
-                    <option value="Project Management">Project Management</option>
-                    <option value="Digital Transformation">Digital Transformation</option>
-                    <option value="Cybersecurity">Cybersecurity</option>
-                    <option value="STEM Education">STEM Education</option>
-                    <option value="Other">Other</option>
-                  </select>
-                </div>
-
-                <div>
-                  <label className="block text-sm font-medium text-foreground mb-2">
-                    Message *
-                  </label>
-                  <textarea
-                    name="message"
-                    value={formData.message}
-                    onChange={handleInputChange}
-                    required
-                    rows={4}
-                    className="w-full px-3 py-2 border border-border rounded-lg bg-background text-foreground focus:outline-none focus:ring-2 focus:ring-primary resize-none"
-                    placeholder="Tell us about your project or consultation needs..."
-                  />
-                </div>
-
-                <div className="flex gap-3 pt-4">
-                  <button
-                    type="button"
-                    onClick={() => setShowConsultationModal(false)}
-                    className="flex-1 px-4 py-2 border border-border rounded-lg text-foreground hover:bg-muted transition-colors"
-                  >
-                    Cancel
-                  </button>
-                  <button
-                    type="submit"
-                    disabled={isSubmitting}
-                    className="flex-1 px-4 py-2 bg-primary text-primary-foreground rounded-lg hover:bg-primary/90 transition-colors disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center gap-2"
-                  >
-                    {isSubmitting ? (
-                      "Sending..."
-                    ) : (
-                      <>
-                        <Send className="w-4 h-4" />
-                        Send Request
-                      </>
-                    )}
-                  </button>
-                </div>
-              </form>
-            </div>
-          </div>
-        </div>
-      )}
+      <ConsultationModal
+        open={showConsultationModal}
+        onClose={() => setShowConsultationModal(false)}
+      />
+      <ResumeViewerModal
+        open={showResumePopup}
+        onClose={() => setShowResumePopup(false)}
+      />
     </section>
   );
 }

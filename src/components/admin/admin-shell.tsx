@@ -5,6 +5,7 @@ import { usePathname, useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 import {
   BookOpen,
+  BrainCircuit,
   Calendar,
   CalendarClock,
   ExternalLink,
@@ -37,6 +38,11 @@ const navItems = [
     label: "Books",
     href: "/admin/books",
     icon: BookOpen,
+  },
+  {
+    label: "Models",
+    href: "/admin/models",
+    icon: BrainCircuit,
   },
   {
     label: "Consultations",

@@ -2,21 +2,19 @@
 
 import Link from "next/link";
 import { useState } from "react";
+import { Home } from "lucide-react";
 import logo from "@/assets/images/logo1.png";
 import Image from "next/image";
 export default function Header() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
 
    const navItems = [
-    { label: "Home", href: "/#home" },
+    { label: "Home", href: "/#home", icon: Home },
     { label: "Services", href: "/#services" },
     { label: "Projects", href: "/#projects" },
     { label: "News", href: "/#blog" },
     { label: "Books", href: "/#books" },
-    { label: "Awards", href: "/#awards" },
-    { label: "Testimonials", href: "/#testimonials" },
-    { label: "About", href: "/#about" },
-    { label: "Contact", href: "/#contact" },
+    { label: "Model", href: "/#models" },
   ];
 
   return (
@@ -49,12 +47,23 @@ export default function Header() {
         >
           {navItems.map((item) => (
             <li key={item.href}>
-              <a
-                href={item.href}
-                className="text-foreground hover:text-accent transition-colors"
-              >
-                {item.label}
-              </a>
+              {item.icon ? (
+                <a
+                  href={item.href}
+                  aria-label={item.label}
+                  title={item.label}
+                  className="flex items-center text-foreground hover:text-accent transition-colors"
+                >
+                  <item.icon className="h-5 w-5" />
+                </a>
+              ) : (
+                <a
+                  href={item.href}
+                  className="font-bold text-foreground hover:text-accent transition-colors"
+                >
+                  {item.label}
+                </a>
+              )}
             </li>
           ))}
         </ul>
