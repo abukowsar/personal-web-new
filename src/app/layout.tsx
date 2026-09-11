@@ -1,12 +1,10 @@
-"use client";
-
 import type React from "react";
-
-import { useState, useEffect } from "react";
+import type { Metadata } from "next";
 import { Analytics } from "@vercel/analytics/next";
 import "./globals.css";
-import { Lexend, Poppins } from "next/font/google";
+import { Poppins } from "next/font/google";
 import { cn } from "@/lib/utils";
+import ThemeToggle from "@/components/theme-toggle";
 
 const poppins = Poppins({
   subsets: ["latin"],
@@ -14,43 +12,40 @@ const poppins = Poppins({
   variable: "--font-poppins",
 });
 
+const title = "Engr Abu Kowsar — Technical Project Manager & AI Integration Specialist";
+const description =
+  "PMP & PMI-ACP certified Technical Project Manager delivering high-impact projects across software, hardware, and manufacturing — specializing in Agile methodologies, AI integration, and digital transformation.";
+
+export const metadata: Metadata = {
+  metadataBase: new URL("https://abukowsar.site"),
+  title,
+  description,
+  openGraph: {
+    title,
+    description,
+    url: "https://abukowsar.site",
+    siteName: "Abu Kowsar",
+    type: "website",
+  },
+  twitter: {
+    card: "summary_large_image",
+    title,
+    description,
+  },
+  icons: {
+    icon: [
+      { url: "/favicon.svg", type: "image/svg+xml" },
+      { url: "/favicon-16x16.png", sizes: "16x16", type: "image/png" },
+    ],
+    apple: "/favicon.svg",
+  },
+};
+
 export default function RootLayout({
   children,
 }: Readonly<{
   children: React.ReactNode;
 }>) {
-  const [isDark, setIsDark] = useState(() => {
-    if (typeof window !== "undefined") {
-      return (
-        localStorage.getItem("theme") === "dark" ||
-        (!localStorage.getItem("theme") &&
-          window.matchMedia("(prefers-color-scheme: dark)").matches)
-      );
-    }
-    return false;
-  });
-
-  // <CHANGE> Added theme initialization on mount
-  useEffect(() => {
-    if (isDark) {
-      document.documentElement.classList.add("dark");
-    } else {
-      document.documentElement.classList.remove("dark");
-    }
-  }, [isDark]);
-
-  // <CHANGE> Added theme toggle function
-  const toggleTheme = () => {
-    const newIsDark = !isDark;
-    setIsDark(newIsDark);
-    localStorage.setItem("theme", newIsDark ? "dark" : "light");
-    if (newIsDark) {
-      document.documentElement.classList.add("dark");
-    } else {
-      document.documentElement.classList.remove("dark");
-    }
-  };
-
   return (
     <html lang="en" suppressHydrationWarning>
       <head>
@@ -58,13 +53,16 @@ export default function RootLayout({
         <link rel="icon" type="image/png" sizes="32x32" href="/favicon-16x16.png" />
         <link rel="apple-touch-icon" sizes="180x180" href="/favicon.svg" />
         <meta name="theme-color" content="#3B82F6" />
-        <script suppressHydrationWarning>
-          {`
-            if (localStorage.getItem('theme') === 'dark' || (!localStorage.getItem('theme') && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
-              document.documentElement.classList.add('dark')
-            }
-          `}
-        </script>
+        <script
+          suppressHydrationWarning
+          dangerouslySetInnerHTML={{
+            __html: `
+              if (localStorage.getItem('theme') === 'dark' || (!localStorage.getItem('theme') && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
+                document.documentElement.classList.add('dark')
+              }
+            `,
+          }}
+        />
       </head>
       <body
         className={cn(
@@ -72,15 +70,7 @@ export default function RootLayout({
           poppins.className
         )}
       >
-        <div className="fixed  top-7 md:top-4 right-20 md:right-4 z-50">
-          <button
-            onClick={toggleTheme}
-            className="p-1 rounded-lg bg-primary text-primary-foreground hover:opacity-90 transition-opacity"
-            aria-label="Toggle theme"
-          >
-            {isDark ? "☀️" : "🌙"}
-          </button>
-        </div>
+        <ThemeToggle />
         {children}
         <Analytics />
       </body>
