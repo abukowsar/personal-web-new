@@ -330,63 +330,6 @@ export default function Hero() {
         </div>
       </div>
     </div>
-      <style>{`
-         @keyframes float {
-          0%, 100% {
-            transform: translateY(0px) rotate(0deg);
-          }
-          50% {
-            transform: translateY(-15px) rotate(1deg);
-          }
-        }
-        
-        .animate-float {
-          animation: float 4s ease-in-out infinite;
-        }
-        
-        .animate-float.delay-300 {
-          animation-delay: 0.3s;
-        }
-        
-        .animate-float.delay-600 {
-          animation-delay: 0.6s;
-        }
-        
-        .animate-float.delay-900 {
-          animation-delay: 0.9s;
-        }
-        
-        @keyframes animate-spin-slow {
-          from {
-            transform: translate(-50%, -50%) rotate(0deg);
-          }
-          to {
-            transform: translate(-50%, -50%) rotate(360deg);
-          }
-        }
-        
-        .animate-spin-slow {
-          animation: animate-spin-slow 25s linear infinite;
-        }
-        
-        @keyframes gradient-shift {
-          0%, 100% {
-            background-position: 0% 50%;
-          }
-          50% {
-            background-position: 100% 50%;
-          }
-        }
-        
-        .animate-gradient {
-          background-size: 200% 200%;
-          animation: gradient-shift 3s ease infinite;
-        }
-        
-        .shadow-3xl {
-          box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
-        }
-      `}</style>
 
       <ConsultationModal
         open={showConsultationModal}
