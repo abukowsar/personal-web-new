@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from "react";
+import { Building2, Mail, MapPin, Phone } from "lucide-react";
 
 export default function Contact() {
   const [formData, setFormData] = useState({
@@ -40,19 +41,19 @@ export default function Contact() {
 
   const contactMethods = [
     {
-      icon: "🏠",
+      icon: MapPin,
       label: "Address",
       value: "Dept. of ICT, ICT Division, E-14/X, ICT Tower, Agargaon, Dhaka-1207, Bangladesh",
       link: "https://maps.google.com/?q=ICT+Division+Agargaon+Dhaka",
     },
     {
-      icon: "📱",
+      icon: Phone,
       label: "Phone",
       value: "(+88) 02337730161",
       link: "tel:+8802337730161",
     },
     {
-      icon: "📧",
+      icon: Mail,
       label: "Email",
       value: "eng.abukowsar@gmail.com",
       link: "mailto:eng.abukowsar@gmail.com",
@@ -75,23 +76,29 @@ export default function Contact() {
         </div>
 
         <div className="grid md:grid-cols-3 gap-6 mb-12">
-          {contactMethods.map((method, index) => (
-            <a
-              key={index}
-              href={method.link}
-              className="group p-6 border border-border rounded-xl bg-card hover:border-accent hover:bg-accent/5 transition-all duration-300 text-center hover:-translate-y-1"
-            >
-              <div className="text-4xl mb-3 group-hover:scale-110 transition-transform">
-                {method.icon}
-              </div>
-              <h3 className="text-sm font-semibold text-muted-foreground mb-2 uppercase tracking-wide">
-                {method.label}
-              </h3>
-              <p className="text-foreground font-semibold group-hover:text-accent transition-colors text-sm">
-                {method.value}
-              </p>
-            </a>
-          ))}
+          {contactMethods.map((method, index) => {
+            const Icon = method.icon;
+
+            return (
+              <a
+                key={index}
+                href={method.link}
+                className="group p-6 border border-border rounded-xl bg-card hover:border-accent hover:bg-accent/5 transition-all duration-300 text-center hover:-translate-y-1"
+              >
+                <div className="mb-3 flex justify-center">
+                  <div className="flex h-12 w-12 items-center justify-center rounded-xl bg-accent/10 transition-transform group-hover:scale-110">
+                    <Icon className="h-6 w-6 text-accent" />
+                  </div>
+                </div>
+                <h3 className="text-sm font-semibold text-muted-foreground mb-2 uppercase tracking-wide">
+                  {method.label}
+                </h3>
+                <p className="text-foreground font-semibold group-hover:text-accent transition-colors text-sm">
+                  {method.value}
+                </p>
+              </a>
+            );
+          })}
         </div>
 
         <div className="grid md:grid-cols-2 gap-12">
@@ -103,7 +110,7 @@ export default function Contact() {
 
               <div className="space-y-4">
                 <div className="flex items-start gap-3">
-                  <span className="text-2xl">📌</span>
+                  <Building2 className="h-6 w-6 text-primary shrink-0" />
                   <div>
                     <h6 className="font-semibold text-foreground mb-1">
                       Project Management & Technical Coordination Office:
@@ -120,7 +127,7 @@ Agargaon, Dhaka–1217, Bangladesh
                 </div>
 
                 <div className="flex items-start gap-3">
-                  <span className="text-2xl">📞</span>
+                  <Phone className="h-6 w-6 text-primary shrink-0" />
                   <div>
                     <h6 className="font-semibold text-foreground mb-1">
                       Technical Support & Project Coordination:
@@ -132,7 +139,7 @@ Agargaon, Dhaka–1217, Bangladesh
                 </div>
 
                 <div className="flex items-start gap-3">
-                  <span className="text-2xl">📧</span>
+                  <Mail className="h-6 w-6 text-primary shrink-0" />
                   <div>
                     <h6 className="font-semibold text-foreground mb-1">
                       Official Project Communication:
