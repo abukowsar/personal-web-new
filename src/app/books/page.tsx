@@ -1,146 +1,168 @@
 "use client";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import Link from "next/link";
-import { ArrowLeft, Star, BookOpen, Download, ExternalLink, ShoppingCart } from "lucide-react";
+import { Star, BookOpen, Download, ExternalLink } from "lucide-react";
 import Header from "@/components/header";
 import Footer from "@/components/footer";
 import BookCoverArt from "@/components/book-cover-art";
 import BookCoverPreview from "@/components/book-cover-preview";
+import FlipBookReader from "@/components/flip-book-reader";
+
+type Book = {
+  id: string | number;
+  title: string;
+  subtitle?: string;
+  author: string;
+  description: string;
+  category: string;
+  rating: number;
+  reviews: number;
+  pages: number;
+  language: string;
+  publishYear: string;
+  price: string;
+  color: string;
+  icon: string;
+  imageUrl?: string;
+  downloadUrl?: string;
+  previewUrl?: string;
+  pdfUrl?: string;
+  bestseller?: boolean;
+};
+
+const fallbackBooks: Book[] = [
+  {
+    id: 1,
+    title: "Child Cyber Safety",
+    subtitle: "A Comprehensive Guide to Modern PM Practices",
+    author: "Abu Kowsar",
+    description: "Master the art of project management with proven methodologies, real-world case studies, and practical frameworks for success. This comprehensive guide covers traditional and agile approaches, risk management, stakeholder engagement, and leadership strategies.",
+    category: "Project Management",
+    rating: 4.8,
+    reviews: 156,
+    pages: 320,
+    language: "English",
+    publishYear: "2024",
+    price: "$29.99",
+    color: "bg-blue-500",
+    icon: "📊",
+    bestseller: true,
+  },
+  {
+    id: 2,
+    title: "AI Integration in Business",
+    subtitle: "Transforming Organizations with Artificial Intelligence",
+    author: "Abu Kowsar",
+    description: "Explore practical strategies for implementing AI solutions in business processes, from automation to decision-making systems. Learn how to identify AI opportunities, manage implementation challenges, and measure ROI.",
+    category: "Technology",
+    rating: 4.9,
+    reviews: 203,
+    pages: 280,
+    language: "English",
+    publishYear: "2024",
+    price: "$34.99",
+    color: "bg-purple-500",
+    icon: "🤖",
+    bestseller: true,
+  },
+  {
+    id: 3,
+    title: "Agile Leadership Handbook",
+    subtitle: "Leading Teams in the Digital Age",
+    author: "Abu Kowsar",
+    description: "Develop agile leadership skills to navigate complex projects and inspire high-performing teams in dynamic environments. Covers servant leadership, team dynamics, and change management.",
+    category: "Leadership",
+    rating: 4.7,
+    reviews: 128,
+    pages: 250,
+    language: "English",
+    publishYear: "2023",
+    price: "$27.99",
+    color: "bg-green-500",
+    icon: "🎯",
+    bestseller: false,
+  },
+  {
+    id: 4,
+    title: "Digital Transformation Guide",
+    subtitle: "Strategies for Modern Organizations",
+    author: "Abu Kowsar",
+    description: "Navigate the digital transformation journey with proven frameworks, case studies, and implementation strategies. Learn how to build digital capabilities and drive organizational change.",
+    category: "Digital Strategy",
+    rating: 4.6,
+    reviews: 94,
+    pages: 300,
+    language: "English",
+    publishYear: "2023",
+    price: "$31.99",
+    color: "bg-orange-500",
+    icon: "🚀",
+    bestseller: false,
+  },
+  {
+    id: 5,
+    title: "Cybersecurity for Managers",
+    subtitle: "Protecting Digital Assets in the Modern Era",
+    author: "Abu Kowsar",
+    description: "Essential cybersecurity knowledge for business leaders and project managers. Covers risk assessment, security frameworks, incident response, and building security-aware cultures.",
+    category: "Security",
+    rating: 4.5,
+    reviews: 87,
+    pages: 275,
+    language: "English",
+    publishYear: "2023",
+    price: "$28.99",
+    color: "bg-red-500",
+    icon: "🔐",
+    bestseller: false,
+  },
+  {
+    id: 6,
+    title: "Innovation Management",
+    subtitle: "Driving Growth Through Creative Solutions",
+    author: "Abu Kowsar",
+    description: "Learn how to foster innovation within organizations, manage creative processes, and turn ideas into successful products and services. Includes frameworks for innovation strategy and culture building.",
+    category: "Innovation",
+    rating: 4.4,
+    reviews: 72,
+    pages: 290,
+    language: "English",
+    publishYear: "2022",
+    price: "$26.99",
+    color: "bg-indigo-500",
+    icon: "💡",
+    bestseller: false,
+  },
+];
 
 export default function Books() {
-  const allBooks = [
-    {
-      id: 1,
-      title: "Child Cyber Safety",
-      subtitle: "A Comprehensive Guide to Modern PM Practices",
-      author: "Abu Kowsar",
-      description: "Master the art of project management with proven methodologies, real-world case studies, and practical frameworks for success. This comprehensive guide covers traditional and agile approaches, risk management, stakeholder engagement, and leadership strategies.",
-      category: "Project Management",
-      rating: 4.8,
-      reviews: 156,
-      pages: 320,
-      language: "English",
-      publishYear: "2024",
-      price: "$29.99",
-      color: "bg-blue-500",
-      icon: "📊",
-      downloadUrl: "#",
-      previewUrl: "#",
-      bestseller: true
-    },
-    {
-      id: 2,
-      title: "AI Integration in Business",
-      subtitle: "Transforming Organizations with Artificial Intelligence",
-      author: "Abu Kowsar",
-      description: "Explore practical strategies for implementing AI solutions in business processes, from automation to decision-making systems. Learn how to identify AI opportunities, manage implementation challenges, and measure ROI.",
-      category: "Technology",
-      rating: 4.9,
-      reviews: 203,
-      pages: 280,
-      language: "English",
-      publishYear: "2024",
-      price: "$34.99",
-      color: "bg-purple-500",
-      icon: "🤖",
-      downloadUrl: "#",
-      previewUrl: "#",
-      bestseller: true
-    },
-    {
-      id: 3,
-      title: "Agile Leadership Handbook",
-      subtitle: "Leading Teams in the Digital Age",
-      author: "Abu Kowsar",
-      description: "Develop agile leadership skills to navigate complex projects and inspire high-performing teams in dynamic environments. Covers servant leadership, team dynamics, and change management.",
-      category: "Leadership",
-      rating: 4.7,
-      reviews: 128,
-      pages: 250,
-      language: "English",
-      publishYear: "2023",
-      price: "$27.99",
-      color: "bg-green-500",
-      icon: "🎯",
-      downloadUrl: "#",
-      previewUrl: "#",
-      bestseller: false
-    },
-    {
-      id: 4,
-      title: "Digital Transformation Guide",
-      subtitle: "Strategies for Modern Organizations",
-      author: "Abu Kowsar",
-      description: "Navigate the digital transformation journey with proven frameworks, case studies, and implementation strategies. Learn how to build digital capabilities and drive organizational change.",
-      category: "Digital Strategy",
-      rating: 4.6,
-      reviews: 94,
-      pages: 300,
-      language: "English",
-      publishYear: "2023",
-      price: "$31.99",
-      color: "bg-orange-500",
-      icon: "🚀",
-      downloadUrl: "#",
-      previewUrl: "#",
-      bestseller: false
-    },
-    {
-      id: 5,
-      title: "Cybersecurity for Managers",
-      subtitle: "Protecting Digital Assets in the Modern Era",
-      author: "Abu Kowsar",
-      description: "Essential cybersecurity knowledge for business leaders and project managers. Covers risk assessment, security frameworks, incident response, and building security-aware cultures.",
-      category: "Security",
-      rating: 4.5,
-      reviews: 87,
-      pages: 275,
-      language: "English",
-      publishYear: "2023",
-      price: "$28.99",
-      color: "bg-red-500",
-      icon: "🔐",
-      downloadUrl: "#",
-      previewUrl: "#",
-      bestseller: false
-    },
-    {
-      id: 6,
-      title: "Innovation Management",
-      subtitle: "Driving Growth Through Creative Solutions",
-      author: "Abu Kowsar",
-      description: "Learn how to foster innovation within organizations, manage creative processes, and turn ideas into successful products and services. Includes frameworks for innovation strategy and culture building.",
-      category: "Innovation",
-      rating: 4.4,
-      reviews: 72,
-      pages: 290,
-      language: "English",
-      publishYear: "2022",
-      price: "$26.99",
-      color: "bg-indigo-500",
-      icon: "💡",
-      downloadUrl: "#",
-      previewUrl: "#",
-      bestseller: false
-    }
-  ];
-
-  const categories = ["All", "Project Management", "Technology", "Leadership", "Digital Strategy", "Security", "Innovation"];
+  const [allBooks, setAllBooks] = useState<Book[]>(fallbackBooks);
   const [selectedCategory, setSelectedCategory] = useState("All");
-  const [coverPreviewBook, setCoverPreviewBook] = useState<(typeof allBooks)[number] | null>(null);
+  const [coverPreviewBook, setCoverPreviewBook] = useState<Book | null>(null);
+  const [readerBook, setReaderBook] = useState<Book | null>(null);
 
-  const filteredBooks = selectedCategory === "All" 
-    ? allBooks 
+  useEffect(() => {
+    const loadBooks = async () => {
+      try {
+        const response = await fetch("/api/content/books");
+        const data = await response.json();
+
+        if (Array.isArray(data.items) && data.items.length > 0) {
+          setAllBooks(data.items);
+        }
+      } catch (error) {
+        console.error("Unable to load books:", error);
+      }
+    };
+
+    loadBooks();
+  }, []);
+
+  const categories = ["All", ...Array.from(new Set(allBooks.map((book) => book.category)))];
+
+  const filteredBooks = selectedCategory === "All"
+    ? allBooks
     : allBooks.filter(book => book.category === selectedCategory);
-
-  const handleDownloadResume = () => {
-    const link = document.createElement("a");
-    link.href = "/resume.pdf";
-    link.download = "resume.pdf";
-    document.body.appendChild(link);
-    link.click();
-    document.body.removeChild(link);
-  };
 
   return (
     <>
@@ -185,6 +207,9 @@ export default function Books() {
         {/* Books Grid */}
         <div className="py-16 px-4">
           <div className="max-w-6xl mx-auto">
+            {filteredBooks.length === 0 ? (
+              <p className="text-center text-muted-foreground">No books in this category yet.</p>
+            ) : (
             <div className="grid lg:grid-cols-2 gap-8">
               {filteredBooks.map((book) => (
                 <div
@@ -198,7 +223,7 @@ export default function Books() {
                       </span>
                     </div>
                   )}
-                  
+
                   <div className="flex flex-col md:flex-row">
                     {/* Book Cover */}
                     <button
@@ -207,14 +232,23 @@ export default function Books() {
                       aria-label={`Preview cover of ${book.title}`}
                       className="relative block w-full md:w-48 h-64 md:h-auto appearance-none border-0 bg-gradient-to-br from-secondary to-muted p-0 text-left overflow-hidden cursor-zoom-in"
                     >
-                      <BookCoverArt
-                        title={book.title}
-                        subtitle={book.subtitle}
-                        author={book.author}
-                        category={book.category}
-                        color={book.color}
-                        icon={book.icon}
-                      />
+                      {book.imageUrl ? (
+                        // eslint-disable-next-line @next/next/no-img-element
+                        <img
+                          src={book.imageUrl}
+                          alt={book.title}
+                          className="h-full w-full object-cover"
+                        />
+                      ) : (
+                        <BookCoverArt
+                          title={book.title}
+                          subtitle={book.subtitle}
+                          author={book.author}
+                          category={book.category}
+                          color={book.color}
+                          icon={book.icon}
+                        />
+                      )}
                     </button>
 
                     {/* Book Details */}
@@ -224,7 +258,9 @@ export default function Books() {
                         <h3 className="text-xl font-bold text-foreground mb-1 group-hover:text-accent transition-colors duration-300">
                           {book.title}
                         </h3>
-                        <p className="text-sm text-accent font-medium mb-2">{book.subtitle}</p>
+                        {book.subtitle && (
+                          <p className="text-sm text-accent font-medium mb-2">{book.subtitle}</p>
+                        )}
                         <p className="text-sm text-muted-foreground">by {book.author}</p>
                       </div>
 
@@ -270,30 +306,65 @@ export default function Books() {
 
                       {/* Action Buttons */}
                       <div className="flex gap-2">
-                        <a
-                          href={book.downloadUrl}
-                          className="flex-1 inline-flex items-center justify-center gap-2 px-3 py-2 bg-primary text-primary-foreground rounded-lg text-sm font-medium hover:bg-primary/90 transition-colors"
-                        >
-                          <Download className="w-4 h-4" />
-                          Download
-                        </a>
-                        <a
-                          href={book.previewUrl}
-                          className="inline-flex items-center justify-center gap-2 px-3 py-2 border border-border rounded-lg text-sm font-medium hover:bg-muted transition-colors"
-                        >
-                          <ExternalLink className="w-4 h-4" />
-                          Preview
-                        </a>
-                        <button className="inline-flex items-center justify-center gap-2 px-3 py-2 bg-green-600 text-white rounded-lg text-sm font-medium hover:bg-green-700 transition-colors">
-                          <ShoppingCart className="w-4 h-4" />
-                          Buy
-                        </button>
+                        {book.pdfUrl ? (
+                          <>
+                            <button
+                              onClick={() => setReaderBook(book)}
+                              className="flex-1 inline-flex items-center justify-center gap-2 px-3 py-2 bg-primary text-primary-foreground rounded-lg text-sm font-medium hover:bg-primary/90 transition-colors"
+                            >
+                              <BookOpen className="w-4 h-4" />
+                              Read
+                            </button>
+                            <a
+                              href={book.pdfUrl}
+                              download
+                              className="inline-flex items-center justify-center gap-2 px-3 py-2 border border-border rounded-lg text-sm font-medium hover:bg-muted transition-colors"
+                            >
+                              <Download className="w-4 h-4" />
+                              Download
+                            </a>
+                          </>
+                        ) : (
+                          <>
+                            {book.downloadUrl && book.downloadUrl !== "#" && (
+                              <a
+                                href={book.downloadUrl}
+                                className="flex-1 inline-flex items-center justify-center gap-2 px-3 py-2 bg-primary text-primary-foreground rounded-lg text-sm font-medium hover:bg-primary/90 transition-colors"
+                              >
+                                <Download className="w-4 h-4" />
+                                Download
+                              </a>
+                            )}
+                            {book.previewUrl && book.previewUrl !== "#" && (
+                              <a
+                                href={book.previewUrl}
+                                target="_blank"
+                                rel="noopener noreferrer"
+                                className="flex-1 inline-flex items-center justify-center gap-2 px-3 py-2 border border-border rounded-lg text-sm font-medium hover:bg-muted transition-colors"
+                              >
+                                <ExternalLink className="w-4 h-4" />
+                                Preview
+                              </a>
+                            )}
+                            {(!book.downloadUrl || book.downloadUrl === "#") &&
+                              (!book.previewUrl || book.previewUrl === "#") && (
+                                <button
+                                  onClick={() => setCoverPreviewBook(book)}
+                                  className="flex-1 inline-flex items-center justify-center gap-2 px-3 py-2 border border-border rounded-lg text-sm font-medium hover:bg-muted transition-colors"
+                                >
+                                  <BookOpen className="w-4 h-4" />
+                                  View Cover
+                                </button>
+                              )}
+                          </>
+                        )}
                       </div>
                     </div>
                   </div>
                 </div>
               ))}
             </div>
+            )}
           </div>
         </div>
 
@@ -315,7 +386,7 @@ export default function Books() {
           </div>
         </div>
       </div>
-      
+
       <Footer />
 
       {coverPreviewBook && (
@@ -326,7 +397,16 @@ export default function Books() {
           category={coverPreviewBook.category}
           color={coverPreviewBook.color}
           icon={coverPreviewBook.icon}
+          imageUrl={coverPreviewBook.imageUrl}
           onClose={() => setCoverPreviewBook(null)}
+        />
+      )}
+
+      {readerBook?.pdfUrl && (
+        <FlipBookReader
+          pdfUrl={readerBook.pdfUrl}
+          title={readerBook.title}
+          onClose={() => setReaderBook(null)}
         />
       )}
     </>

@@ -2,14 +2,20 @@ import type React from "react";
 import type { Metadata } from "next";
 import { Analytics } from "@vercel/analytics/next";
 import "./globals.css";
-import { Poppins } from "next/font/google";
+import { Sora, Work_Sans } from "next/font/google";
 import { cn } from "@/lib/utils";
 import ThemeToggle from "@/components/theme-toggle";
 
-const poppins = Poppins({
+const workSans = Work_Sans({
   subsets: ["latin"],
   weight: ["400", "500", "600", "700"],
-  variable: "--font-poppins",
+  variable: "--font-body",
+});
+
+const sora = Sora({
+  subsets: ["latin"],
+  weight: ["600", "700", "800"],
+  variable: "--font-heading",
 });
 
 const title = "Engr Abu Kowsar — Technical Project Manager & AI Integration Specialist";
@@ -52,7 +58,7 @@ export default function RootLayout({
         <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
         <link rel="icon" type="image/png" sizes="32x32" href="/favicon-16x16.png" />
         <link rel="apple-touch-icon" sizes="180x180" href="/favicon.svg" />
-        <meta name="theme-color" content="#3B82F6" />
+        <meta name="theme-color" content="#14B8A6" />
         <script
           suppressHydrationWarning
           dangerouslySetInnerHTML={{
@@ -67,7 +73,9 @@ export default function RootLayout({
       <body
         className={cn(
           `font-sans antialiased transition-colors duration-300`,
-          poppins.className
+          workSans.variable,
+          sora.variable,
+          workSans.className
         )}
       >
         <ThemeToggle />

@@ -3,6 +3,7 @@
 
 import { useEffect, useState } from "react";
 import Image from "next/image";
+import Link from "next/link";
 import ImageLightbox from "./image-lightbox";
 import blog1 from "@/assets/images/blog/blog/blog1.jpg";
 import blog2 from "@/assets/images/blog/blog/blog2.png";
@@ -159,9 +160,9 @@ export default function Blog() {
 
                 <div className="p-6">
                   <h3 className="text-lg font-bold text-foreground mb-3 line-clamp-2 group-hover:text-primary transition-colors duration-300">
-                    <a href="#" className="hover:underline">
+                    <Link href="/news" className="hover:underline">
                       {post.title}
-                    </a>
+                    </Link>
                   </h3>
                   <p className="text-muted-foreground text-sm mb-4 line-clamp-3 leading-relaxed">
                     {post.excerpt}
