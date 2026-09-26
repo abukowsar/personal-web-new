@@ -1,18 +1,27 @@
 "use client";
 
 import { useState } from "react";
+import {
+  BriefcaseBusiness,
+  LayoutDashboard,
+  Rocket,
+  ShieldCheck,
+  Target,
+  Zap,
+} from "lucide-react";
 
 export default function About() {
   const [activeTab, setActiveTab] = useState("skills");
 
   const skills = [
-    { name: "Project Management", level: 95, color: "bg-red-500" },
+    { name: "Project Management", level: 95, color: "bg-primary" },
+    { name: "AI & GenAI Integration", level: 92, color: "bg-accent" },
     { name: "Agile / Scrum", level: 90, color: "bg-primary" },
-    { name: "Change Management", level: 85, color: "bg-green-500" },
-    { name: "Jira / Confluence", level: 80, color: "bg-yellow-500" },
-    { name: "Risk Management", level: 80, color: "bg-cyan-500" },
-    { name: "Stakeholder Communication", level: 80, color: "bg-purple-500" },
-    { name: "Digital Transformation", level: 90, color: "bg-blue-500" },
+    { name: "Digital Transformation", level: 90, color: "bg-accent" },
+    { name: "Change Management", level: 85, color: "bg-primary" },
+    { name: "Jira / Confluence", level: 80, color: "bg-primary" },
+    { name: "Risk Management", level: 80, color: "bg-primary" },
+    { name: "Stakeholder Communication", level: 80, color: "bg-primary" },
   ];
 
   const experiences = [
@@ -120,43 +129,24 @@ export default function About() {
 
   const whatIDo = [
     {
-      icon: "🚀",
+      icon: Rocket,
       title: "Product Delivery",
       description: "End-to-end product delivery from MVP to Scale",
     },
     {
-      icon: "🏃‍♂️",
+      icon: Zap,
       title: "Agile Leadership",
       description: "Agile coaching and Scrum Mastery",
     },
     {
-      icon: "🛡️",
+      icon: ShieldCheck,
       title: "Risk Management",
       description: "Project rescue and risk mitigation",
     },
     {
-      icon: "📊",
+      icon: LayoutDashboard,
       title: "PMO Excellence",
       description: "PMO setup, reporting & dashboards",
-    },
-  ];
-
-  const coreStrengths = [
-    {
-      icon: "🔄",
-      text: "Agile transformations & Scrum coaching",
-    },
-    {
-      icon: "📈",
-      text: "Change Management and Reform",
-    },
-    {
-      icon: "🎯",
-      text: "KPI-driven delivery",
-    },
-    {
-      icon: "🔌",
-      text: "IoT & hardware product delivery",
     },
   ];
 
@@ -201,7 +191,7 @@ export default function About() {
               <div className="relative">
                 <div className="flex items-start gap-4 mb-6">
                   <div className="w-14 h-14 rounded-2xl bg-gradient-to-br from-primary to-accent flex items-center justify-center flex-shrink-0 shadow-lg">
-                    <span className="text-2xl">👨‍💼</span>
+                    <BriefcaseBusiness className="h-6 w-6 text-primary-foreground" />
                   </div>
                   <div>
                     <h3 className="text-2xl font-bold text-foreground mb-1">
@@ -242,54 +232,34 @@ export default function About() {
             {/* What I Do - Grid Layout */}
             <div className="p-6 rounded-2xl bg-card border border-border/50 hover:border-primary/30 transition-all duration-300 hover:shadow-xl hover:shadow-primary/5">
               <h3 className="text-xl font-bold text-foreground mb-6 flex items-center gap-2">
-                <span className="w-8 h-8 rounded-lg bg-primary/10 flex items-center justify-center text-lg">
-                  🎯
+                <span className="w-8 h-8 rounded-lg bg-primary/10 flex items-center justify-center">
+                  <Target className="h-4 w-4 text-primary" />
                 </span>
                 What I Do
               </h3>
 
               <div className="grid grid-cols-1 gap-4">
-                {whatIDo.map((item, index) => (
-                  <div key={index} className="flex gap-3 group cursor-pointer">
-                    <div className="w-10 h-10 rounded-lg bg-gradient-to-br from-primary/10 to-primary/5 flex items-center justify-center flex-shrink-0 group-hover:scale-110 transition-transform">
-                      <span className="text-lg">{item.icon}</span>
+                {whatIDo.map((item, index) => {
+                  const Icon = item.icon;
+
+                  return (
+                    <div key={index} className="flex gap-3 group cursor-pointer">
+                      <div className="w-10 h-10 rounded-lg bg-gradient-to-br from-primary/10 to-primary/5 flex items-center justify-center flex-shrink-0 group-hover:scale-110 transition-transform">
+                        <Icon className="h-5 w-5 text-primary" />
+                      </div>
+                      <div className="flex-1">
+                        <h4 className="font-semibold text-foreground text-sm mb-0.5 group-hover:text-primary transition-colors">
+                          {item.title}
+                        </h4>
+                        <p className="text-xs text-muted-foreground">
+                          {item.description}
+                        </p>
+                      </div>
                     </div>
-                    <div className="flex-1">
-                      <h4 className="font-semibold text-foreground text-sm mb-0.5 group-hover:text-primary transition-colors">
-                        {item.title}
-                      </h4>
-                      <p className="text-xs text-muted-foreground">
-                        {item.description}
-                      </p>
-                    </div>
-                  </div>
-                ))}
+                  );
+                })}
               </div>
             </div>
-
-            {/* Core Strengths - Compact Layout */}
-            {/* <div className="p-6 rounded-2xl bg-gradient-to-br from-green-500/5 via-card to-card border border-border/50 hover:border-green-500/30 transition-all duration-300 hover:shadow-xl hover:shadow-green-500/5">
-              <h3 className="text-xl font-bold text-foreground mb-6 flex items-center gap-2">
-                <span className="w-8 h-8 rounded-lg bg-green-500/10 flex items-center justify-center text-lg">
-                  💪
-                </span>
-                Core Strengths
-              </h3>
-
-              <div className="grid grid-cols-1 gap-3">
-                {coreStrengths.map((item, index) => (
-                  <div
-                    key={index}
-                    className="flex items-center gap-3 group p-3 rounded-lg hover:bg-green-500/5 transition-colors cursor-pointer"
-                  >
-                    <span className="text-lg">{item.icon}</span>
-                    <span className="text-sm text-muted-foreground group-hover:text-foreground transition-colors">
-                      {item.text}
-                    </span>
-                  </div>
-                ))}
-              </div>
-            </div> */}
           </div>
 
           {/* Right Column - Tabs */}
@@ -445,31 +415,6 @@ export default function About() {
             </div>
           </div>
         </div>
-
-        {/* Stats Section */}
-        {/* <div className="mt-16 grid grid-cols-2 md:grid-cols-4 gap-6">
-          {[
-            { value: "12+", label: "Years Experience", icon: "📅" },
-            { value: "50+", label: "Projects Delivered", icon: "🚀" },
-            { value: "7+", label: "Certifications", icon: "🏆" },
-            { value: "100%", label: "Client Satisfaction", icon: "⭐" },
-          ].map((stat, index) => (
-            <div
-              key={index}
-              className="relative p-6 rounded-2xl bg-card border border-border/50 text-center hover:border-primary/30 hover:shadow-xl hover:shadow-primary/5 transition-all duration-300 group overflow-hidden"
-            >
-              <div className="absolute top-0 right-0 text-5xl opacity-5 group-hover:opacity-10 transition-opacity">
-                {stat.icon}
-              </div>
-              <p className="text-4xl md:text-5xl font-bold text-primary mb-2 group-hover:scale-110 transition-transform relative">
-                {stat.value}
-              </p>
-              <p className="text-muted-foreground font-medium relative">
-                {stat.label}
-              </p>
-            </div>
-          ))}
-        </div> */}
       </div>
     </section>
   );
