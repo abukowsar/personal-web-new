@@ -8,7 +8,7 @@ import {
   ArrowRight,
   Award,
   Mail,
-  MessageSquareQuote,
+  TrendingUp,
   Phone,
   MapPin,
   Clock,
@@ -53,7 +53,7 @@ export default function Footer() {
 
   const menuLinks = [
     { label: "Awards", url: "#awards", icon: Award },
-    { label: "Testimonials", url: "#testimonials", icon: MessageSquareQuote },
+    { label: "Achievements", url: "#achievements", icon: TrendingUp },
     { label: "About", url: "#about", icon: UserCircle },
     { label: "Contact", url: "#contact", icon: Mail },
   ];

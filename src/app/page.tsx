@@ -7,7 +7,7 @@ import Hero from "@/components/hero";
 import Services from "@/components/services";
 import Projects from "@/components/projects";
 import Blog from "@/components/blog";
-import Testimonials from "@/components/testimonials";
+import Achievements from "@/components/achievements";
 import About from "@/components/about";
 import Contact from "@/components/contact";
 import Footer from "@/components/footer";
@@ -58,7 +58,7 @@ export default function Home() {
         <Awards />
       </ScrollReveal>
       <ScrollReveal>
-        <Testimonials />
+        <Achievements />
       </ScrollReveal>
       <ScrollReveal>
         <About />
